@@ -1,57 +1,112 @@
 import sys
 import pygame
-import palourde
+from Package.Game.Palourde.palourde import Palourde
+from Package.Game.Palourde.camera import CameraGroup
+import time
+
+class Game():
+    def __init__(self):
+        # ===== CONSTANTES =====
+        self.FPS = 60
+
+        # ===== VARIABLES =====
+        self.running = True
+        self.background = (0,200,0)
+
+        pygame.init()
+        self.SCREEN = pygame.display.set_mode((1280,720))
+        self.displaySurface = pygame.display.get_surface()   
+        
+        self.CLOCK = pygame.time.Clock()
+
+        self.CAMERA = CameraGroup(self.displaySurface)    
+
+        self.PALOURDE = Palourde(self.SCREEN,50,50)
 
 
-pygame.init()
-
-screen = pygame.display.set_mode((1500, 900))
-
-running = True
-
-def quit():
-    running = False
-    pygame.quit()
-    sys.exit()
-
-
-
-FPS = 60
-clock = pygame.time.Clock()
-
-palourde = palourde.Palourde(screen,50,50)
-
-test = 0
-r = 0
-g = 0
-b = 0
+    def loadTestMap(self):
+        blocs = [
+            {"x" : 0 , "y": 400, "width" : 200, "height" : 50},
+            {"x" : 500, "y": 400, "width" : 200, "height" : 50},
+            {"x" : 700, "y": 200, "width" : 200, "height" : 150},
+            {"x" : 200, "y": 800, "width" : 400, "height" : 50},
+            {"x" : 0, "y": 650, "width" : 200, "height" : 150},
+            {"x" : 600, "y": 650, "width" : 200, "height" : 150},
+            {"x" : 0, "y": 100, "width" : 100, "height" : 50},
+            {"x" : 400, "y": 100, "width" : 100, "height" : 200},
+        ]
 
 
-while running:
-    clock.tick(FPS)
+        liste_bloc = []
 
-    test+=1
+        for bloc in blocs:
+            liste_bloc.append(pygame.Rect(bloc["x"], bloc["y"], bloc["width"], bloc["height"]))
 
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            quit()
+        self.CAMERA.loadGame(listSprites=liste_bloc)
 
-    screen.fill((r,g,b))
+    def updateGame(self):
+        self.SCREEN.fill(self.background)
 
-    bloc1 = pygame.Rect(0,400,200,50)
-    bloc2 = pygame.Rect(500, 400, 200, 50)
-    bloc3 = pygame.Rect(700, 200, 200, 150)
-    bloc4 = pygame.Rect(200, 800, 400, 50)
-    bloc5 = pygame.Rect(0, 650, 200, 150)
-    bloc6 = pygame.Rect(600, 650, 200, 150)
-    bloc7 = pygame.Rect(0, 500, 100, 50)
-    bloc8 = pygame.Rect(400, 500, 100, 200)
+        # INPUTS
+        keys = pygame.key.get_pressed()
 
-    liste_bloc = [bloc1,bloc2,bloc3,bloc4,bloc5,bloc6,bloc7,bloc8]
+        if keys[pygame.K_q] or keys[pygame.K_LEFT]:			
+            self.CAMERA.go_Left()
+            self.PALOURDE.marche(-1)
 
-    for i in range(len(liste_bloc)):
-        pygame.draw.rect(screen,(100+i*11,255-20*i,255 - i*10),liste_bloc[i])
+        elif keys[pygame.K_d] or keys[pygame.K_RIGHT]:			
+            self.PALOURDE.marche(1)
+            self.CAMERA.go_Right()
 
-    palourde.framePalourde(liste_bloc)
+        if self.PALOURDE.isFalling == True:
+            self.PALOURDE.tomber()
+            self.CAMERA.go_Bottom(self.PALOURDE.vitesseChute / 100 )
 
-    pygame.display.update()
+        elif keys[pygame.K_SPACE]:
+            self.PALOURDE.saut()
+            self.CAMERA.go_Top( -self.PALOURDE.vitesseChute / 90)
+            
+
+
+        if keys[pygame.K_e]:
+            self.PALOURDE.rotation(-1)
+        elif keys[pygame.K_a]:
+            self.PALOURDE.rotation(1)
+
+        if keys[pygame.K_b]:
+            self.CAMERA.toggleCameraMove()
+            time.sleep(0.2)
+
+
+        # Update Affichage
+        self.CAMERA.updateDisplay()
+        self.PALOURDE.framePalourde(self.CAMERA.getSpriteActual())
+        pygame.display.update()
+
+    
+    def run(self):
+
+        while self.running:
+            self.CLOCK.tick(self.FPS)
+
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT :
+                    self.quit()
+
+            self.updateGame()
+
+            pygame.display.update()       
+            # print(self.PALOURDE.vitesseChute ) 
+            print(self.PALOURDE.speed ) 
+        
+
+    def quit(self):
+        self.running = False
+        pygame.quit()
+        sys.exit()
+          
+
+if __name__ == "__main__":
+    game = Game()
+    game.loadTestMap()
+    game.run()
