@@ -97,7 +97,7 @@ class CameraGroup(pygame.sprite.Group):
                 
             # self.DISPLAY_SURFACE.blit(sprite.image, (sprite.x + self.startX, sprite.y + self.startY))
             # pygame.draw.rect(screen,(100+i*11,255-20*i,255 - i*10),liste_bloc[i])
-            rect = pygame.Rect(sprite.x + self.startX,  sprite.y+ self.startY, 100, 200)
+            rect = pygame.Rect(sprite.x + self.startX,  sprite.y+ self.startY, sprite.width, sprite.height)
             pygame.draw.rect(self.DISPLAY_SURFACE,(100,1,100),rect)
 
             self.spriteActual.append(rect)
