@@ -31,7 +31,6 @@ class Palourde:
 
         self.g = 9.81
         self.timeChute = 0
-        self.m = 1
 
         self.vitesseChute= 1
         self.jumpForce = 250
@@ -44,6 +43,8 @@ class Palourde:
         self.onGround = False
 
         self.angle = 0
+        self.pointRotation1 = 0
+        self.pointRotation2 = 0
 
         self.creationPoint()
 
@@ -84,15 +85,91 @@ class Palourde:
         # permet de former un tuple qui possède les coordonnés de la palourde et de sa taille lors des rotation
         self.rectRotation =  self.palourdeSprite.get_rect(center = self.PALOURDE_IMAGE_RESIZED.get_rect(topleft = (self.x,self.y)).center)
 
+
+    def roulement(self,sens):
+
+        self.rotation(1*sens)
+
+        if self.onGround == True:
+            self.vitesseAvancement = (math.cos(self.angle*math.pi/180*2) + 1.5) * -sens
+
+
+
+    def calcForceRotation(self,x,y,verticale):
+        """
+        Calcule les forces sur la gauche et la droite de la palourde ce qui permet de déterminer sa rotation
+
+        :param x: l'emplacement en x de l'impact
+        :param y: l'emplacement en y de l'impact
+        :param verticale: booléen qui vaut True si c'est un impact verticale
+        """
+        if verticale == True :
+
+            if 90 < self.angle < 270:
+                if x > self.centrePalourde[0]:
+                    self.pointRotation2 += math.sqrt(abs(math.sqrt(((x-self.centrePalourde[0])**2 + (y-self.centrePalourde[1])**2))/25 * self.vitesseChute/100 * math.sqrt(abs((x-self.centrePalourde[1])))))
+                else:
+                    self.pointRotation1 += math.sqrt(abs(math.sqrt(((x-self.centrePalourde[0])**2 + (y-self.centrePalourde[1])**2))/25 * self.vitesseChute/100 * math.sqrt(abs((x-self.centrePalourde[1])))))
+            else:
+                if x > self.centrePalourde[0]:
+                    self.pointRotation1 -= math.sqrt(abs(math.sqrt(((x-self.centrePalourde[0])**2 + (y-self.centrePalourde[1])**2))/25 * self.vitesseChute/100 * math.sqrt(abs((x-self.centrePalourde[1])))))
+                else:
+                    self.pointRotation2 -= math.sqrt(abs(math.sqrt(((x-self.centrePalourde[0])**2 + (y-self.centrePalourde[1])**2))/25 * self.vitesseChute/100 * math.sqrt(abs((x-self.centrePalourde[1])))))
+        else:
+            if 90 < self.angle < 270:
+                if x < self.centrePalourde[0]:
+                    if y < self.centrePalourde[1]:
+                        self.pointRotation2 += math.sqrt(abs(math.sqrt(((x-self.centrePalourde[0])**2 + (y-self.centrePalourde[1])**2))/25 * self.vitesseAvancement * math.sqrt(abs((y-self.centrePalourde[1])))))
+                    else:
+                        self.pointRotation2 -= math.sqrt(abs(math.sqrt(((x - self.centrePalourde[0]) ** 2 + (y - self.centrePalourde[1]) ** 2)) / 25 * self.vitesseAvancement * math.sqrt(abs((y - self.centrePalourde[1])))))
+
+                else:
+                    if y < self.centrePalourde[1]:
+                        self.pointRotation1 += math.sqrt(abs(math.sqrt(((x - self.centrePalourde[0]) ** 2 + (
+                                    y - self.centrePalourde[1]) ** 2)) / 25 * self.vitesseAvancement * math.sqrt(
+                            abs((y - self.centrePalourde[1])))))
+                    else:
+                        self.pointRotation1 -= math.sqrt(abs(math.sqrt(((x - self.centrePalourde[0]) ** 2 + (
+                                    y - self.centrePalourde[1]) ** 2)) / 25 * self.vitesseAvancement * math.sqrt(
+                            abs((y - self.centrePalourde[1])))))
+            else:
+                if x < self.centrePalourde[0]:
+                    if y < self.centrePalourde[1]:
+                        self.pointRotation1 -= math.sqrt(abs(math.sqrt(((x - self.centrePalourde[0]) ** 2 + (
+                                    y - self.centrePalourde[1]) ** 2)) / 25 * self.vitesseAvancement * math.sqrt(
+                            abs((y - self.centrePalourde[1])))))
+                    else:
+                        self.pointRotation1 += math.sqrt(abs(math.sqrt(((x - self.centrePalourde[0]) ** 2 + (
+                                    y - self.centrePalourde[1]) ** 2)) / 25 * self.vitesseAvancement * math.sqrt(
+                            abs((y - self.centrePalourde[1])))))
+                else:
+                    if y < self.centrePalourde[1]:
+                        self.pointRotation2 -= math.sqrt(abs(math.sqrt(((x - self.centrePalourde[0]) ** 2 + (
+                                    y - self.centrePalourde[1]) ** 2)) / 25 * self.vitesseAvancement * math.sqrt(
+                            abs((y - self.centrePalourde[1])))))
+                    else:
+                        self.pointRotation2 += math.sqrt(abs(math.sqrt(((x - self.centrePalourde[0]) ** 2 + (
+                                    y - self.centrePalourde[1]) ** 2)) / 25 * self.vitesseAvancement * math.sqrt(
+                            abs((y - self.centrePalourde[1])))))
+
+
+    def rotationAvecForce(self):
+        self.rotation((self.pointRotation1-self.pointRotation2)/10)
+
+
+    def forceRotationBase(self):
+        self.pointRotation1 = self.g
+        self.pointRotation2 = self.g
+
     def remonter(self):
         #pour les tests
         self.x += self.LARGEUR
         self.y =0
 
     def tomber(self):
-        self.timeChute+=1/60*self.m
+        self.timeChute+=1/60
 
-        self.vitesseChute = self.vitesseChute + self.g*self.timeChute
+        self.vitesseChute += self.g*self.timeChute
 
     def saut(self):
         self.onGround = False
@@ -101,15 +178,15 @@ class Palourde:
     def mouvementVerticale(self):
         self.y += self.vitesseChute/60
 
+    def mouvementHorizontal(self):
+        self.x += self.vitesseAvancement
+
 
     def marche(self,sens):
         if self.speed < 5:
             self.speed += 0.1
 
-
         self.vitesseAvancement = self.speed *sens
-
-        self.x += self.vitesseAvancement
 
     def placement(self):
         self.centrePalourde = (self.x + self.LARGEUR/2,self.y + self.HAUTEUR/2)
@@ -170,6 +247,7 @@ class Palourde:
             self.indiceXMax = 0
             self.indiceXMin = 0
             self.indiceYMin = 0
+            self.indiceYMax = 0
 
 
             for i in range(len(self.pointTouche)):
@@ -178,6 +256,7 @@ class Palourde:
                     self.indiceXMax = i
                 if self.pointTouche[i][1] > self.pointYMax:
                     self.pointYMax = self.pointTouche[i][1]
+                    self.indiceYMax = i
                 if self.pointTouche[i][0] < self.pointXMin:
                     self.pointXMin = self.pointTouche[i][0]
                     self.indiceXMin = i
@@ -195,27 +274,47 @@ class Palourde:
             #Si il vaut False, la collision est causée par un mouvement horizontal
 
             if self.sol == False and self.onGround == True:
+                self.calcForceRotation(self.pointTouche[self.indiceYMax][0],self.pointTouche[self.indiceYMax][1],True)
+
                 self.y = objet.y + (self.y-self.pointYMax)
 
                 self.timeChute = 0
                 self.vitesseChute = 0
+                if abs(self.vitesseAvancement) >0.1:
+
+                    self.vitesseAvancement /= 1.1
+                else:
+                    self.vitesseAvancement = 0
                 self.sol = True
 
                 return True
 
             elif self.plafond == False and self.sol == False  and objet.collidepoint(self.pointTouche[self.indiceYMin]) and self.pointYMin < self.pointPlafond :
+                self.calcForceRotation(self.pointTouche[self.indiceYMin][0], self.pointTouche[self.indiceYMin][1], True)
                 self.y = objet.y+objet.height + (self.y-self.pointYMin)
                 self.vitesseChute = 5
                 self.plafond = True
 
+
+            elif self.plafond == False and self.sol == True  and objet.collidepoint(self.pointTouche[self.indiceYMin]) and self.pointYMin < self.pointPlafond :
+                self.calcForceRotation(self.pointTouche[self.indiceYMin][0], self.pointTouche[self.indiceYMin][1], True)
+                self.vitesseChute = 5
+                self.plafond = True
+
             elif self.murGauche == False and self.plafond == False and objet.collidepoint(self.pointTouche[self.indiceXMin]) and self.pointXMin < self.centrePalourde[0]:
+                self.calcForceRotation(self.pointTouche[self.indiceXMin][0], self.pointTouche[self.indiceXMin][1], False)
                 self.x =objet.x + objet.width + (self.x-self.pointXMin)
                 self.murGauche = True
+
+                self.vitesseAvancement = math.sqrt(abs(self.vitesseAvancement)) / 3
                 return True
 
             elif self.murDroit == False and self.plafond == False and objet.collidepoint(self.pointTouche[self.indiceXMax]) and self.pointXMax > self.centrePalourde[0] :
+                self.calcForceRotation(self.pointTouche[self.indiceXMax][0], self.pointTouche[self.indiceXMax][1], False)
                 self.x = objet.x + (self.x-self.pointXMax)
                 self.murDroit = True
+
+                self.vitesseAvancement = -1 * math.sqrt(abs(self.vitesseAvancement)) / 3
                 return True
 
 
@@ -241,20 +340,19 @@ class Palourde:
             self.marche(1)
         elif pygame.key.get_pressed()[pygame.K_LEFT]or pygame.key.get_pressed()[pygame.K_q]:
             self.marche(-1)
+        elif pygame.key.get_pressed()[pygame.K_z]:
+            self.vitesseAvancement = 0
         else:
             self.speed = 0.1
-            self.vitesseAvancement = 0
 
-        self.pointSol = self.calcPointSol()
-        self.pointPlafond = self.calcPointPlafond()
-        self.onGround = False
-        self.sol = False
-        self.murGauche = False
-        self.murDroit = False
-        self.plafond = False
+        if pygame.key.get_pressed()[pygame.K_e]:
+            self.roulement(-1)
+        elif pygame.key.get_pressed()[pygame.K_a]:
+            self.roulement(1)
 
-        for objet in listeObjetCollision:
-            self.collison = self.collision(objet)
+
+        self.mouvementHorizontal()
+
 
         if self.onGround == False:
             self.isFalling = True
@@ -264,15 +362,30 @@ class Palourde:
 
         if self.isFalling == True:
             self.tomber()
-        else:
+        elif self.timeChute <= 6/30:
             if pygame.key.get_pressed()[pygame.K_SPACE]:
                 self.saut()
 
         self.mouvementVerticale()
 
-        if pygame.key.get_pressed()[pygame.K_e]:
-            self.rotation(-1)
-        elif pygame.key.get_pressed()[pygame.K_a]:
-            self.rotation(1)
+        #Aide pour le fonctionnement des collisions
+        self.pointSol = self.calcPointSol()
+        self.pointPlafond = self.calcPointPlafond()
+        self.onGround = False
+        self.sol = False
+        self.murGauche = False
+        self.murDroit = False
+        self.plafond = False
+
+        if self.isFalling == False:
+            self.forceRotationBase()
+
+        #Teste les collisions avec tous objet de la liste listeObjetCollision
+        for objet in listeObjetCollision:
+            self.collison = self.collision(objet)
+
+        self.rotationAvecForce()
+
+
 
         self.placement()
