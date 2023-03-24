@@ -46,7 +46,7 @@ class Map():
                                                                                     
                         
                     if "layer" not in object:
-                        self.object["layer"] = 1                
+                        object["layer"] = 1                
                     
                 
                     self.listObject[object["layer"]].append(self.sprite)
