@@ -1,7 +1,7 @@
 import sys
 import pygame
 from Package.Game.Palourde.palourde import Palourde
-from Package.Game.Palourde.camera import CameraGroup
+from Package.Game.Palourde.camera2 import CameraGroup
 import time
 from Package.menu2 import Menu
 from Package.Game.json.test_json import Map
