@@ -1,0 +1,11 @@
+{"header" :{
+    "title":"menu",
+    "imagePath":"Assets/Entity/",
+    "numberPlayerMin":2,
+    "images":{"palourde":"palourde.png"}
+            },
+"listeObject":[
+            {"x" : 0 , "y": 600, "width" : 1200, "height" : 50, "layer":1, "color":[122, 0, 133],"type":""}
+        ]
+
+}
