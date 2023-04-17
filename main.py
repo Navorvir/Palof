@@ -47,24 +47,24 @@ class Game():
     def updateGame(self):
         self.SCREEN.fill(self.background)
 
+
         # INPUTS
         keys = pygame.key.get_pressed()
 
-        if keys[pygame.K_q] or keys[pygame.K_LEFT]:			
-            self.CAMERA.go_Left()
-            self.PALOURDE.marche(-1)
+        if pygame.key.get_pressed()[pygame.K_q] or pygame.key.get_pressed()[pygame.K_LEFT]:
+            self.PALOURDE.roulement(1)
 
-        elif keys[pygame.K_d] or keys[pygame.K_RIGHT]:			
-            self.PALOURDE.marche(1)
-            self.CAMERA.go_Right()
+        elif pygame.key.get_pressed()[pygame.K_d] or pygame.key.get_pressed()[pygame.K_RIGHT]:
+            self.PALOURDE.roulement(-1)
 
         if self.PALOURDE.isFalling == True:
             self.PALOURDE.tomber()
-            self.CAMERA.go_Bottom(self.PALOURDE.vitesseChute / 100 )
 
-        elif keys[pygame.K_SPACE]:
+
+        elif self.PALOURDE.timeChute <= 6 / 30 and  (pygame.key.get_pressed()[pygame.K_SPACE] or pygame.key.get_pressed()[pygame.K_UP]):
             self.PALOURDE.saut()
-            self.CAMERA.go_Top( -self.PALOURDE.vitesseChute / 90)
+
+        self.CAMERA.moveCamera(self.PALOURDE.xCamera,self.PALOURDE.yCamera)
             
 
 
@@ -80,6 +80,7 @@ class Game():
 
         # Update Affichage
         self.CAMERA.updateDisplay()
+        print(self.CAMERA.getSpriteActual()[0])
         self.PALOURDE.framePalourde(self.CAMERA.getSpriteActual())
         pygame.display.update()
 
@@ -95,10 +96,7 @@ class Game():
 
             self.updateGame()
 
-            pygame.display.update()       
-            # print(self.PALOURDE.vitesseChute ) 
-            print(self.PALOURDE.speed ) 
-        
+            pygame.display.update()               
 
     def quit(self):
         self.running = False
