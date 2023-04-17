@@ -114,38 +114,14 @@ class CameraGroup(pygame.sprite.Group):
                 
         self.update()
 
-
-    def go_Left(self, n = 2):
+    def moveCamera(self, x, y):
         """
         Ajoute n à la varialbe START_X
         n -- le nombre ajouté
         """
         if self.move:
-            self.startX += n
-
-    def go_Right(self, n = 2):
-        """
-        Ajoute n à la varialbe START_X : pour déplacer les éléments vers la gauche
-        n -- le nombre ajouté
-        """
-        if self.move:
-            self.startX -= n
-
-    def go_Top(self, n = 2):
-        """
-        Ajoute n à la varialbe START_Y  : pour déplacer les éléments vers la bas
-        n -- le nombre ajouté
-        """
-        if self.move:
-            self.startY += n
-
-    def go_Bottom(self, n = 2):
-        """
-        Soustrait n à la varialbe START_Y  : pour déplacer les éléments vers la haut
-        n -- le nombre ajouté
-        """
-        if self.move:
-            self.startY -= n
+            self.startX = -x
+            self.startY = -y
 
 
     def binarySearch (self, tableau, valeur, key=lambda x : x):
