@@ -6,7 +6,24 @@ import time
 from Package.menu2 import Menu
 from Package.Game.json.test_json import Map
 
+#class Inter_menu():
+#    def __init__(self, menu):
+#        self.map = "Package/Game/json/inter_menu.json"
+#        self.listObjectInstancies = {}
+#        self.changeScene = True
+#        self.menu = menu
+        
+#    def update(self,menu):
+#        for button in self.listObjectInstancies["button"]:
+#            if button.pressed():
+#                if button.name == "escape":
+#                    game.quit()
+                    
+#                elif button.name == "retour_menu":
+#                    self.menu.etape_menu = self.menu.TITRE           
+        
 
+        
 class Game():
     def __init__(self):
         # ===== CONSTANTES =====
@@ -28,12 +45,16 @@ class Game():
 
         self.PALOURDE = Palourde(self.SCREEN,50,50)
         
-        self.menu = Menu(self.largeur_ecran, self.hauteur_ecran, self.SCREEN, self.PALOURDE)
-
-    def loadTestMap(self, map):
+        self.menu = Menu(self.largeur_ecran, self.hauteur_ecran, self.SCREEN, self.PALOURDE, self.CAMERA)
+        #self.inter_menu = Inter_menu(self.menu)
+        
+        self.scene = self.menu
+        
+    def loadTestMap(self, map, scene):
         testMap = Map()
         testMap.traitement(map)
         listObject = testMap.listObject
+        scene.listObjectInstancies = testMap.get_ObjectInstancies()
 
         self.CAMERA.loadGame(listSprites=listObject)
 
@@ -60,7 +81,6 @@ class Game():
             self.CAMERA.go_Top( -self.PALOURDE.vitesseChute / 90)
             
 
-
         if keys[pygame.K_e]:
             self.PALOURDE.rotation(-1)
         elif keys[pygame.K_a]:
@@ -69,6 +89,10 @@ class Game():
         if keys[pygame.K_b]:
             self.CAMERA.toggleCameraMove()
             time.sleep(0.2)
+            
+        #if keys[pygame.K_ESCAPE]:
+        #    self.scene = self.inter_menu
+            
 
 
         # Update Affichage
@@ -78,22 +102,26 @@ class Game():
 
     
     def run(self):
-        game.loadTestMap(self.menu.map)
-        self.background = self.menu.background
+        self.background = self.scene.background
         self.CAMERA.toggleCameraMove()
+        
         while self.running:
             self.CLOCK.tick(self.FPS)
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT :
                     self.quit()
-                    
-            if self.menu.etape_menu != self.menu.NONE:
-                self.menu.update()
-                self.updateGame()
-            else:
-                self.loadTestMap(blocs)
-                self.updateGame()
+                
+            self.scene.update(self.scene)
+            
+                
+            self.updateGame()
+            
+            if self.scene.changeScene == True:
+                    self.loadTestMap(self.scene.map, self.scene)
+                    self.scene.changeScene = False
+                    self.updateGame()
+           
 
             pygame.display.update()       
             # print(self.PALOURDE.vitesseChute ) 
