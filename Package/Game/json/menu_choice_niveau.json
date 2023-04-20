@@ -1,0 +1,15 @@
+{"header" :{
+    "title":"menu_choix_niveau",
+    "imagePath":"Assets/",
+    "numberPlayerMin":2,
+    "images":{"palourde":"/Entity/palourde.png",
+                "level1Button": "/Button/Level1Button.png",
+                "level2Button": "/Button/Level2Button.png"
+            }},
+"listeObject":[
+            {"x" : 0 , "y": 600, "width" : 1300, "height" : 50, "layer":1, "color":[122, 0, 133]},
+            {"x" : 200 , "y": 200, "width" : 1200, "height" : 50, "layer":1, "image":"level1Button","type":"button", "name":"level1"},
+            {"x" : 500 , "y": 200, "width" : 1200, "height" : 50, "layer":1, "image":"level2Button","type":"button", "name":"level2"}
+        ]
+
+} 

@@ -1,0 +1,14 @@
+{"header" :{
+    "title":"menu",
+    "imagePath":"Assets/",
+    "numberPlayerMin":2,
+    "images":{"palourde":"/Entity/palourde.png",
+                "modeCoopButton": "/Button/Bouton_mode_coop.png",
+                "modeCourseButton": "/Button/Bouton_mode_course.png",
+                "modeVersusButton": "/Button/Bouton_mode_versus.png"}
+            },
+"listeObject":[
+            {"x" : 0 , "y": 600, "width" : 1300, "height" : 50, "layer":1, "color":[122, 0, 133]}
+        ]
+
+}

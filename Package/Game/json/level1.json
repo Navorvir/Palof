@@ -1,0 +1,15 @@
+{"header" :{
+    "title":"level1",
+    "imagePath":"Assets/",
+    "numberPlayerMin":2,
+    "images":{"palourde":"/Entity/palourde.png"
+            }},
+"listeObject":[
+            {"x" : 600 , "y": 400, "width" : 120, "height" : 50, "layer":1, "color":[122, 0, 133]},
+            {"x" : 400 , "y": 500, "width" : 500, "height" : 50, "layer":1, "color":[122, 0, 133]},
+            {"x" : 0 , "y": 600, "width" : 120, "height" : 50, "layer":1, "color":[122, 0, 133]},
+            {"x" : 250 , "y": 200, "width" : 300, "height" : 50, "layer":1, "color":[122, 0, 133]},
+            {"x" : 0 , "y": 200, "width" : 400, "height" : 50, "layer":1, "color":[122, 0, 133]}
+        ]
+
+} 
