@@ -1,5 +1,6 @@
 import json
 import pygame
+from Package.bouton import Button
 
 class Map():
     
@@ -8,6 +9,7 @@ class Map():
         self.layer1 = []
         self.layer2 = []
         self.listObject = [self.layer0, self.layer1, self.layer2]
+        self.listObjectInstancies = {}
         
         
         
@@ -35,14 +37,17 @@ class Map():
                         self.image = pygame.Surface((object["width"],object["height"]))
                         self.image.fill(object["color"])
                             
-                    #if "angle" in object:
-                    #    self.image = pygame.transform.rotate(self.image, object["angle"])
+                    if "angle" in object:
+                        self.image = pygame.transform.rotate(self.image, object["angle"])
                             
                     self.rect = self.image.get_rect(topleft = (object["x"], object["y"]))
                     
                         
                     self.sprite["image"] = self.image
                     self.sprite["rect"] = self.rect
+                    
+                    if "type" in object:
+                        self.object_Instancy(object["type"], object)
                                                                                     
                         
                     if "layer" not in object:
@@ -51,8 +56,21 @@ class Map():
                 
                     self.listObject[object["layer"]].append(self.sprite)
                     
+    def object_Instancy(self, type, object):
+        if type == "button":
+            self.objectInstancy = Button(object["x"], object["y"], self.image, object["name"])
+            
+        elif type == "line" :
+            pass
                     
-                        
-                
-                
-                
+        if type not in self.listObjectInstancies:
+            self.listObjectInstancies[type] = [self.objectInstancy]
+        else :
+            self.listObjectInstancies[type].append(self.objectInstancy)
+        
+    def get_ObjectInstancies(self):
+        
+        return self.listObjectInstancies
+    
+    
+                    
