@@ -1,0 +1,5 @@
+Le langage utilisé est le python et on utilise les bibliothèque pygame, socket et json
+Possède une architecture réseau (apparemment)
+Pour l’affichage, les scènes à afficher sont stockées dans des fichiers json et envoyer à la caméra qui s’occupe d’afficher les sprites proche de la palourde.
+La physique de la palourde est programmée dans l’objet palourde
+Les entrées de l’utilisateur sont prises en compte dans run
