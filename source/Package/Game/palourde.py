@@ -945,7 +945,7 @@ class Palourde:
 class OtherPalourde:
 
 
-    def __init__(self,surface,x : float,y : float):
+    def __init__(self,surface,x : float,y : float, id : int):
         # Créé par Robin
 
         #Cette objet est permet d'afficher uniquement la position des palourdes des autres joueurs avec leurs états
@@ -953,6 +953,7 @@ class OtherPalourde:
         self.surface = surface
         self.x = x
         self.y = y
+        self.ID = id
 
         # 185 et 354 sont les dimensions de l'image de la palourde
         self.HAUTEUR = 185//4
