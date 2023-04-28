@@ -741,7 +741,7 @@ class Palourde:
 
                     self.y = self.ySol + (self.y-self.pointYMax)
 
-                    if abs(self.vitesseChute) > 5*60 and self.modeVersus == True:
+                    if abs(self.vitesseChute) > 8*60 and self.modeVersus == True:
                         self.sante -= abs(self.vitesseChute) / 60
                         self.recoitDegat = True
                     self.timeChute = 0
@@ -760,7 +760,7 @@ class Palourde:
                 elif self.plafond == False and self.sol == False  and objet.collidepoint(self.pointTouche[self.indiceYMin]) and self.pointYMin < self.pointPlafond and collision == False and self.pointTouche[self.indiceYMin][1] > objet.y + objet.height//4:
                     self.calcForceRotation(self.pointTouche[self.indiceYMin][0], self.pointTouche[self.indiceYMin][1], True)
                     self.y = objet.y+objet.height + (self.y-self.pointYMin)
-                    if abs(self.vitesseChute) > 5*60 and self.modeVersus == True:
+                    if abs(self.vitesseChute) > 8*60 and self.modeVersus == True:
                         self.sante -= abs(self.vitesseChute) / 60
                         self.recoitDegat = True
                     self.vitesseChute = 5
@@ -772,7 +772,7 @@ class Palourde:
                 #Collision avec le 'plafond' avec collision avec le sol
                 elif self.plafond == False and self.sol == True  and objet.collidepoint(self.pointTouche[self.indiceYMin]) and self.pointYMin < self.pointPlafond and collision == False:
                     self.calcForceRotation(self.pointTouche[self.indiceYMin][0], self.pointTouche[self.indiceYMin][1], True)
-                    if abs(self.vitesseChute) > 5*60 and self.modeVersus == True:
+                    if abs(self.vitesseChute) > 8*60 and self.modeVersus == True:
                         self.sante -= abs(self.vitesseChute) / 60
                         self.recoitDegat = True
                     self.vitesseChute = 5
@@ -788,7 +788,7 @@ class Palourde:
                     self.murGauche = True
                     self.creationPoint()
 
-                    if abs(self.vitesseAvancement) > 5 and self.modeVersus == True:
+                    if abs(self.vitesseAvancement) > 8 and self.modeVersus == True:
                         self.sante -= abs(self.vitesseAvancement)
                         self.recoitDegat = True
 
@@ -803,7 +803,7 @@ class Palourde:
                     self.murDroit = True
                     self.creationPoint()
 
-                    if abs(self.vitesseAvancement) > 5 and self.modeVersus == True:
+                    if abs(self.vitesseAvancement) > 8 and self.modeVersus == True:
                         self.sante -= abs(self.vitesseAvancement)
                         self.recoitDegat = True
 
