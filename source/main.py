@@ -53,7 +53,7 @@ class Game():
         self.problem : str = ""
         self.frameFin = 0
 
-
+        self.etapeEscape=0
         
         # Background
         self.spriteBackground : list = [self.BACKGROUND_IMAGE,self.BACKGROUND_IMAGE]
@@ -76,6 +76,16 @@ class Game():
                     self.quit()
                 if event.type == pygame.KEYDOWN:
                     self.MENU.checkInput(event)
+                    if event.key == pygame.K_ESCAPE:
+                        if self.MENU.stepMenu == None:
+                            if self.etapeEscape == 0:
+                                self.timeMesure = pygame.time.get_ticks()
+                                self.etapeEscape = 1
+                            elif pygame.time.get_ticks()-self.timeMesure <2000:
+                                self.retourMenu()
+                                self.etapeEscape = 0
+                            else :
+                                self.etapeEscape=0  
               
             
          
