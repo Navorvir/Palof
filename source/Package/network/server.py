@@ -45,11 +45,9 @@ class Server:
         self.levelName = ""
         self.mode = ""
 
-        self.socket : socket.socket= socket.socket(socket.AF_BLUETOOTH, socket.SOCK_STREAM, socket.BTPROTO_RFCOMM)
-        # AF_BLUETOOTH -> Bluetooth
-        # SOCK_STREAM -> Type socket (defaut)
-        # BTPROTO_RFCOMM -> Protocole (accepte (bdaddr, channel))
-
+        self.serverRun = False
+        
+     
         self.selector : selectors.DefaultSelector = selectors.DefaultSelector()
 
         # self.hostClient = HostClient()
@@ -72,8 +70,9 @@ class Server:
         """
         showMessage(f"Le serveur se lance sur l'adresse '{self.MAC_SERVER}' au port {self.PORT}")
         showMessage(f"Le code est {self.CODE}")
-        
-        while True:
+        self.serverRun = True
+
+        while self.serverRun:
             events = self.selector.select()
             
             for key, mask in events:
@@ -82,7 +81,7 @@ class Server:
 
             sleep(self.TIME_SPEED_RESPONSE)
     
-    def closeServer(self, text : str ="Le serveur s'arrete") -> str:
+    def close(self, text : str ="Le serveur s'arrete") -> str:
         """Arrête le serveur avec un message
 
         Args:
@@ -93,6 +92,17 @@ class Server:
         """
         self.sendAll(CODE_DISCONECTED, text)
         showMessage(text)
+        self.serverRun = False
+
+        # Remet à zéro
+
+        self.data : dict = {self.ID_CLIENT_HOST : {'x' : 0, 'y': 0, "angle" : 0, "connected":True, "sante":100}}
+        self.connectedClient : dict = {}
+
+        self.gameStarted = False
+        self.lastId : int = 0
+
+        self.socket.close()
 
         return text
 
@@ -118,16 +128,18 @@ class Server:
     def acceptClient(self, *args) -> None:
         """Mettre en place les systèmes pour la gestion de ce nouveau client
         """
-        conn, addr = self.socket.accept()
-        idClient = self.generateId()
 
-        client = InteractClient(self, conn, addr, idClient)
+        if self.serverRun:
+            conn, addr = self.socket.accept()
+            idClient = self.generateId()
 
-        self.connectedClient[client.ID_CLIENT] = client
-        client.socket.setblocking(False)        
-        self.selector.register(client.socket, selectors.EVENT_READ, client.read) # en mode lecture
+            client = InteractClient(self, conn, addr, idClient)
 
-        showMessage("Nouvelle connexion : ", client.ID_CLIENT, "avec l'adresse",addr[0])
+            self.connectedClient[client.ID_CLIENT] = client
+            client.socket.setblocking(False)        
+            self.selector.register(client.socket, selectors.EVENT_READ, client.read) # en mode lecture
+
+            showMessage("Nouvelle connexion : ", client.ID_CLIENT, "avec l'adresse",addr[0])
 
     def delPlayer(self, id : int):
         """Supprime un joueur par son id
@@ -165,7 +177,7 @@ class Server:
         """Lancement de la boucle qui envoie les données du jeu tous les x secondes
         """
 
-        while True and self.gameStarted:
+        while self.gameStarted and self.serverRun:
             x, y =self.PALOURDE.updateTotalCo() # le joueur host
             self.updateDataClientHost(x, y, self.PALOURDE.angle, self.PALOURDE.sante)
             self.sendAll(CODE_GAME_DATA, self.data)

@@ -4,6 +4,7 @@
     "numberPlayerMin":2,
     "spawnCoordonate" : {"x" : 560, "y" : 300},
     "lockCamera":true,
+    
 
     "images":{"palourde":"/Entity/palourde.png",
 		"sable":"/Structures/sable_200X100.png",

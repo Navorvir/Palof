@@ -107,9 +107,8 @@ class Menu():
 
                 if event.key in (pygame.K_RETURN, pygame.K_KP_ENTER):
                     objectInput.text = objectInput.getUnicode(objectInput.text)
-                    objectInput.command(objectInput.text)
-
-                    x = self.listObjectInstancies["text"]["probleme"]
+                    if objectInput.command != None and type(objectInput.command) != str:
+                        objectInput.command(objectInput.text)
 
 
                 elif event.key == pygame.K_BACKSPACE:

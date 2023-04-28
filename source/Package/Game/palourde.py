@@ -452,7 +452,14 @@ class Palourde:
 
         self.xCamera += self.vitesseAvancement
     
-    def updateTotalCo(self):
+    def updateTotalCo(self) -> tuple: 
+        """Met à jour les coordonnées totales x et y
+
+        Returns:
+            tuple: coordonnées totalse x et y
+        """
+        # Créé par Nathan
+
         self.xTotal = self.x + self.xCamera
         self.yTotal = self.y + self.yCamera
         return self.xTotal, self.yTotal
@@ -544,12 +551,14 @@ class Palourde:
             self.isKicking = False
             self.etapeKick = 1
 
-    def coupSubi(self,sens) -> None:
+    def coupSubi(self,dictRequete) -> None:
         """summary
         Projette la palourde, permettant alors qu'elle se prenne des dégats
 
         S'active suite à avoir reçut un coup de la part d'une autre palourde
         """
+
+        sens = dictRequete["sens"]
         # Créé par Robin
         if pygame.time.get_ticks() - self.tempsDernierCoup > 800:
             self.vitesseAvancement += 15 * sens
@@ -935,7 +944,7 @@ class Palourde:
 class OtherPalourde:
 
 
-    def __init__(self,surface,x : float,y : float):
+    def __init__(self,surface,x : float,y : float, id:int):
         # Créé par Robin
 
         #Cette objet est permet d'afficher uniquement la position des palourdes des autres joueurs avec leurs états
@@ -943,6 +952,8 @@ class OtherPalourde:
         self.surface = surface
         self.x = x
         self.y = y
+
+        self.ID = id
 
         # 185 et 354 sont les dimensions de l'image de la palourde
         self.HAUTEUR = 185//4

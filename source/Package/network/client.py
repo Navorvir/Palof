@@ -40,7 +40,7 @@ class Client(NetowrkObject):
             CODE_STOP_GAME : self.stopGame,
             CODE_GAME_DATA : self.setData,
             CODE_SETTINGS : self.setSettings,
-            CODE_DISCONECTED : self.closeClient,
+            CODE_DISCONECTED : self.close,
             CODE_COUPS : self.PALOURDE.coupSubi,
         }
 
@@ -127,7 +127,7 @@ class Client(NetowrkObject):
                 callback = key.data
                 callback(key.fileobj, mask)
 
-    def closeClient(self, data : str = "Le serveur s'arrete") -> None:
+    def close(self, data : str = "Le serveur s'arrete") -> None:
         """Fermer le client
 
         Args:
@@ -181,7 +181,7 @@ class Client(NetowrkObject):
     def stopGame(self, *args)-> None:
         """Arrête le jeu
         """
-        self.closeClient("le jeu est terminé")
+        self.close("le jeu est terminé")
 
     def setSettings(self, data : dict) -> None:
         """Paramètre les données utiles tel que l'id du client et le level

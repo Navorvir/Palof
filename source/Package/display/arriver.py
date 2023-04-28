@@ -43,6 +43,5 @@ class Arrivee():
                 return False
 
         if nb_bon == len(listePalourde):
-            print("finit !!!!!!!!")
             return True
         return False
