@@ -498,6 +498,8 @@ class Palourde:
         self.sante = 100
         self.mort = False
         self.PALOURDE_IMAGE_RESIZED = pygame.transform.scale(self.PALOURDE_IMAGE, (self.LARGEUR, self.HAUTEUR))
+        self.frameRouge = 0
+        
 
         self.PALOURDE_BRAS_GAUCHE_IMAGE_RESIZED = pygame.transform.scale(self.PALOURDE_BRAS_GAUCHE_IMAGE,(121 // 4, 199 // 4))
         self.PALOURDE_BRAS_DROIT_IMAGE_RESIZED = pygame.transform.scale(self.PALOURDE_BRAS_DROIT_IMAGE,(149 // 4, 199 // 4))
