@@ -137,10 +137,15 @@ class Game():
         
         #Traitement pour déterminer si la partie est finie
         if self.modeVersus == True:
-            nbPalourde = 0
+            nbPalourdeMorte = 0
             if self.PALOURDE.mort == True:
-                nbPalourde += 1
-        
+                nbPalourdeMorte += 1
+            for palourde in self.ALL_PALOURDEs:
+                if palourde.sante <= 0:
+                    nbPalourdeMorte += 1
+                if nbPalourdeMorte >= len(self.âlourdeEvenement) - 1 :
+                        self.frameFin = 200
+                 
         if self.frameFin <= 0:
             self.evenementObjet()
         else:
@@ -173,6 +178,8 @@ class Game():
             if int(id) != self.NETWORK_OBJECT.ID_CLIENT_HOST and data[id]["sante"] > 0:   
                 self.ALL_PALOURDES[id].x = data[id]["x"] + self.CAMERA.startX
                 self.ALL_PALOURDES[id].y = data[id]["y"] + self.CAMERA.startY
+                
+                self.ALL_PALOURDES[id].sante = data[id]["sante"]
 
                 self.ALL_PALOURDES[id].angle = data[id]["angle"]
                 self.ALL_PALOURDES[id].rotation(1)
