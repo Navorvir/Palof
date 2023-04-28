@@ -1,0 +1,42 @@
+{"header" :{
+    "title":"menu",
+    "imagePath":"Assets/",
+    "numberPlayerMin":2,
+    "spawnCoordonate" : {"x" : 560, "y" : 300},
+    "lockCamera":true,
+
+    "images":{"palourde":"/Entity/palourde.png",
+		"sable":"/Structures/sable_200X100.png",
+		"sablePlateforme":"/Structures/sable_150X50.png",
+		"sableMur":"/Structures/sable_200X1500.png",
+		"pierre":"/Structures/pierre.png",
+		"palmier":"/Structures/palmier.png"
+            }},
+"listeObject":[
+            {"x" : -150 , "y": -50, "width" : 200, "height" : 1500, "layer":1, "image":"sableMur"},
+            {"x" : 1230 , "y": -50, "width" : 200, "height" : 1500, "layer":1, "image":"sableMur"},
+            {"x" : 200 , "y": 600, "width" : 150, "height" : 50, "layer":1, "image":"sablePlateforme"},
+            {"x" : 880 , "y": 600, "width" : 150, "height" : 50, "layer":1, "image":"sablePlateforme"},
+            {"x" : 540, "y": 450, "width" : 150, "height" : 50, "layer":1, "image":"sablePlateforme"},
+			{"x" : 200 , "y": 300, "width" : 150, "height" : 50, "layer":1, "image":"sablePlateforme"},
+            {"x" : 880 , "y": 300, "width" : 150, "height" : 50, "layer":1, "image":"sablePlateforme"},
+            {"x" : 0 , "y": 700, "width" : 200, "height" : 100, "layer":1, "image":"sable"},
+            {"x" : 200 , "y": 700, "width" : 200, "height" : 100, "layer":1, "image":"sable"},
+            {"x" : 400 , "y": 700, "width" : 200, "height" : 100, "layer":1, "image":"sable"},
+            {"x" : 600 , "y": 700, "width" : 200, "height" : 100, "layer":1, "image":"sable"},
+            {"x" : 800 , "y": 700, "width" : 200, "height" : 100, "layer":1, "image":"sable"},
+            {"x" : 1000 , "y": 700, "width" : 200, "height" : 100, "layer":1, "image":"sable"},
+            {"x" : 1200 , "y": 700, "width" : 200, "height" : 100, "layer":1, "image":"sable"},
+			{"x" : 0 , "y": -50, "width" : 200, "height" : 100, "layer":1, "image":"sable"},
+            {"x" : 200 , "y": -50, "width" : 200, "height" : 100, "layer":1, "image":"sable"},
+            {"x" : 400 , "y": -50, "width" : 200, "height" : 100, "layer":1, "image":"sable"},
+            {"x" : 600 , "y": -50, "width" : 200, "height" : 100, "layer":1, "image":"sable"},
+            {"x" : 800 , "y": -50, "width" : 200, "height" : 100, "layer":1, "image":"sable"},
+            {"x" : 1000 , "y": -50, "width" : 200, "height" : 100, "layer":1, "image":"sable"},
+            {"x" : 1200 , "y": -50, "width" : 200, "height" : 100, "layer":1, "image":"sable"},
+            {"x" : "center" , "y": "center", "width" : 200, "height" : 100, "layer":1, "text":"", "type":"text", "name":"gameOver", "color":[255,255,255]}
+            			
+			
+        ]
+
+}
