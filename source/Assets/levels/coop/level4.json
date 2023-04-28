@@ -41,7 +41,7 @@
             {"x" : 10600 , "y": 700, "width" : 200, "height" : 100, "layer":1, "image":"sable"},
             {"x" : 10800 , "y": 700, "width" : 200, "height" : 100, "layer":1, "image":"sable"},
             
-			{"x" : 5800 , "y": 500, "width" : 800, "height" : 100, "layer":0,"type":"ligneArrivee"},
+	    {"x" : 11000 , "y": 700, "width" : 800, "height" : 100, "layer":0,"type":"ligneArrivee"},
 			
             {"x": 11000, "y": 800, "width": 200, "height": 100, "layer":1, "image":"sable"},
             {"x": 11200, "y": 800, "width": 200, "height": 100, "layer":1, "image":"sable"},
