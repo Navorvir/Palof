@@ -14,9 +14,9 @@ py -m pip <nom de la bibothèque python>
 Si vous voulez jouer à plusieurs, vous devez choisir un joueur hôte qui permettra le lien entre tous les appareils. Pour ce faire, le joueur hôte doit s'appairer aux différents appareils clients pour permettre la connexion Bluetooth.
 
 ## Lancement
-Le joueur hote doit d'abord aller vers la gauche pour accéder au menu mode. Ici il doit choisir le mode qu'il veut jouer soit **les niveaux coopératifs** ou le **versus**
-<img src="https://user-images.githubusercontent.com/86235354/235151493-e0b61485-ea4a-4d1e-9ab8-26c16741b686.png" alt="My cool logo" width="400"/>
+Le joueur hote doit d'abord aller vers la gauche pour accéder au menu mode. Ici il doit choisir le mode qu'il veut jouer soit **les niveaux coopératifs** ou le **versus** en cliquant dessus.
 
+<img src="https://user-images.githubusercontent.com/86235354/235151493-e0b61485-ea4a-4d1e-9ab8-26c16741b686.png" alt="My cool logo" width="400"/>
 
 <img src="https://user-images.githubusercontent.com/86235354/235151566-5ea5451a-7ddf-4f5b-80d2-5e269c6df150.png" alt="My cool logo" width="400"/>
 
