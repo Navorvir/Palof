@@ -75,13 +75,15 @@ class Menu():
 
         self.listObjectInstancies : dict = {"button":{},"input":{},"text":{}}
 
-
         
     def startG(self):
         pass
 
     def title(self) -> None:
         # par Lucie
+        """
+        met à jour à l'écran titre
+        """
         if self.map != self.NAME_MENU["title"]["path"]:
             self.switchMenu("title")
  
@@ -95,6 +97,9 @@ class Menu():
         
     def checkButton(self):
         # par Nathan
+        """
+        Regarde si les boutons de la scène sont pressé et si oui execute leur commande
+        """
         for key, objectButton in self.listObjectInstancies["button"].items():
             if objectButton.pressed():   
                 if  objectButton.directCommand:
@@ -105,6 +110,9 @@ class Menu():
 
     def checkInput(self, event) -> None:
         # par Nathan
+        """
+        Pour chaque input de la scène, regarde les entrés claviers pour les stockés en mémoire et l'affiché
+        """
         if "input" in self.listObjectInstancies:
             for key, objectInput in self.listObjectInstancies["input"].items():
 
@@ -123,11 +131,17 @@ class Menu():
 
     def waiGameStarted(self):
         # par Nathan
+        """
+        lance un niveau en multijoueur
+        """
         self.runServer = True
 
 
     def choseMenu(self) -> None:
         # par Lucie
+        """
+        met à jour le menu du choix du mode de jeu
+        """
         # Changer de menu
         if self.PALOURDE.palourdeRect.clipline(0,0,0,self.SCREEN_WIDTH):
             self.PALOURDE.x = self.SCREEN_HEIGHT - self.PALOURDE.LARGEUR
@@ -141,20 +155,35 @@ class Menu():
                     self.PALOURDE.y = 0
 
     def chosePlayer(self):
+        # par Nathan
+        """
+        correspond au menu pour choisir si on est en solo ou mutijoueur
+        """
         self.switchMenu("player")
     
 
     def startParty(self, *args):
+        # par Nathan
+        """
+        lance la partie
+        """
         self.map = self.mapChose
         self.switchMenu(None)
 
     def multiPlayer(self):
+        # par Nathan
+        """
+        lance un niveau en multijoueur
+        """
         self.runServer = True
         self.map = self.mapChose
         self.switchMenu(None)
         
 
     def goVersus(self, levelName :str = "versus", modeServer : bool = True, *args):
+        """
+        lance le mode versus
+        """
         # par Nathan
         self.mode = self.MODE_VERSUS
         self.mapChose = self.NAME_MAP_VERUS["versus"] 
@@ -164,6 +193,9 @@ class Menu():
         self.chosePlayer()
 
     def goLevel(self, levelName : str =None, modeServer : bool = False, allPath : str=None) -> None:
+        """
+        defini la map du jeu en fonction du niveau pris
+        """
         # par Nathan
         self.mode = self.MODE_COOP
         self.PALOURDE.changementModeNormal()
@@ -183,6 +215,9 @@ class Menu():
 
   
     def waitNetwork(self) -> None:
+        """
+        met à jour le menu pour se connecter en réseau
+        """
         # par Nathan
         if self.PALOURDE.palourdeRect.clipline(self.SCREEN_HEIGHT,0,self.SCREEN_HEIGHT,self.SCREEN_WIDTH):
             self.PALOURDE.x = 0
@@ -191,6 +226,9 @@ class Menu():
 
     def switchMenu(self, name : str | None, *args) -> None:
         # par Nathan
+        """
+        Change de scène en prenant en paramètre le nom de la scène
+        """
         if name != None:
             self.map = self.NAME_MENU[name]["path"]
             
@@ -199,7 +237,10 @@ class Menu():
     
 
     def update(self) -> None:
-        # par Nathan
+        # par Nathan et Lucie
+        """
+        Met à jour le menu
+        """
         if self.stepMenu in self.NAME_MENU and "methUpdt" in self.NAME_MENU[self.stepMenu]:
             self.NAME_MENU[self.stepMenu]["methUpdt"]()
         elif  self.stepMenu not in self.NAME_MENU and self.stepMenu != None:
@@ -211,6 +252,9 @@ class Menu():
     # Méthodes Load
     def loadText(self):
         # par Nathan
+        """
+        Ajoute les objets texte à la caméra
+        """
         if "text" in self.listObjectInstancies:
             for key, objectText in self.listObjectInstancies["text"].items():
                 objectText.setText()
@@ -218,36 +262,43 @@ class Menu():
 
     def loadButton(self):
         # par Nathan
+        """
+        Ajoute les boutons à la caméra
+        """
         if "button" in self.listObjectInstancies:
             for key, objectButton in self.listObjectInstancies["button"].items():
                 self.appendListSprite(key, objectButton)
 
     def loadInput(self):
         # par Nathan
+        """
+        Ajoute les inputs à la caméra
+        """
         if "input" in self.listObjectInstancies:
             for key, objectInput in self.listObjectInstancies["input"].items():
                 self.appendListSprite(key, objectInput)
-
-    # En dev
-    def pause(self):
-        for button in self.listObjectInstancies["button"]:
-            if button.pressed():
-                if button.name == "retour_menu":
-                    self.stepMenu = self.TITRE
-                    self.switchSceneEnable = True
-                elif button.name == "escape":
-                    pass
                
         
     def lockCamera(self, x : int = 500, y : int = 250) -> None:
+        # par Nathan et Robin
+        """
+        Bloque la caméra en fonction des des coordonnées x et y
+        """
         self.PALOURDE.lockCamera(x,y)
         self.CAMERA.lockCamera()
 
     def unlockCamera(self, x : int = 0, y : int = 0) -> None:
+        # par Nathan et Robin
+        """
+        Débloque la caméra en la réinitialisant aux coordonnée x et y
+        """
         self.PALOURDE.lockCamera(x,y)
         self.CAMERA.unlockCamera()
 
     def appendListSprite(self,name, listSprite):
         # par Lucie et Nathan
+        """
+        Envoie listSprite à la caméra
+        """
         self.CAMERA.listSpritesChange[name] = listSprite
         
