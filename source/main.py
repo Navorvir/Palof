@@ -53,7 +53,7 @@ class Game():
         self.problem : str = ""
         self.frameFin = 0
 
-
+        self.etapeEscape=0
         
         # Background
         self.spriteBackground : list = [self.BACKGROUND_IMAGE,self.BACKGROUND_IMAGE]
@@ -76,6 +76,16 @@ class Game():
                     self.quit()
                 if event.type == pygame.KEYDOWN:
                     self.MENU.checkInput(event)
+                    if event.key == pygame.K_ESCAPE:
+                        if self.MENU.stepMenu == None:
+                            if self.etapeEscape == 0:
+                                self.timeMesure = pygame.time.get_ticks()
+                                self.etapeEscape = 1
+                            elif pygame.time.get_ticks()-self.timeMesure <2000:
+                                self.retourMenu()
+                                self.etapeEscape = 0
+                            else :
+                                self.etapeEscape=0  
               
             
          
@@ -147,11 +157,7 @@ class Game():
                         self.frameFin = 200
 
         
-        #Traitement pour déterminer si la partie est finie
-        if self.modeVersus == True:
-            nbPalourde = 0
-            if self.PALOURDE.mort == True:
-                nbPalourde += 1
+
         
         if self.frameFin <= 0:
             self.evenementObjet()
@@ -192,6 +198,8 @@ class Game():
                 self.ALL_PALOURDES[id].rotation(1)
                 self.ALL_PALOURDES[id].placement()
                 self.CAMERA.appendPalourde(self.ALL_PALOURDES[id].rect)
+                
+                self.palourdeEvenement.append(self.ALL_PALOURDES[id])
             
 
 
@@ -336,15 +344,15 @@ class Game():
             for rect in autrePalourde.rect:
                 if pygame.Rect.colliderect(rect,self.PALOURDE.brasGaucheRectRotation):
                     if 90 < self.PALOURDE.angle < 270 : 
-                        self.NETWORK_OBJECT.sendTemporyParameter("sens", -1,id)
-                    else:
                         self.NETWORK_OBJECT.sendTemporyParameter("sens", 1,id)
+                    else:
+                        self.NETWORK_OBJECT.sendTemporyParameter("sens", -1,id)
 
                 if pygame.Rect.colliderect(rect,self.PALOURDE.brasDroitRectRotation):
                     if 90 < self.PALOURDE.angle < 270 : 
-                        self.NETWORK_OBJECT.sendTemporyParameter("sens", 1,id)
-                    else:
                         self.NETWORK_OBJECT.sendTemporyParameter("sens", -1,id)
+                    else:
+                        self.NETWORK_OBJECT.sendTemporyParameter("sens", 1,id)
 
     def retourMenu(self):
         # if len(self.palourdeEvenement) > 1 :
@@ -352,7 +360,11 @@ class Game():
             self.NETWORK_OBJECT.close()
             self.NETWORK_OBJECT = None
         self.ALL_PALOURDES = {}
-        self.MENU.switchMenu("title")   
+
+
+        self.PALOURDE.changementModeNormal()
+        self.MENU.switchMenu("title")
+
 
     def evenementObjet(self) -> None:
         if "ligneArrivee" in self.MENU.listObjectInstancies:

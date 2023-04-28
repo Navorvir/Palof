@@ -46,8 +46,11 @@ class Server:
         self.mode = ""
 
         self.serverRun = False
-        
-     
+        self.socket : socket.socket= socket.socket(socket.AF_BLUETOOTH, socket.SOCK_STREAM, socket.BTPROTO_RFCOMM)
+        # AF_BLUETOOTH -> Bluetooth
+        # SOCK_STREAM -> Type socket (defaut)
+        # BTPROTO_RFCOMM -> Protocole (accepte (bdaddr, channel))
+
         self.selector : selectors.DefaultSelector = selectors.DefaultSelector()
 
         # self.hostClient = HostClient()

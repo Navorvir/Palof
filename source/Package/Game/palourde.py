@@ -498,6 +498,8 @@ class Palourde:
         self.sante = 100
         self.mort = False
         self.PALOURDE_IMAGE_RESIZED = pygame.transform.scale(self.PALOURDE_IMAGE, (self.LARGEUR, self.HAUTEUR))
+        self.frameRouge = 0
+        
 
         self.PALOURDE_BRAS_GAUCHE_IMAGE_RESIZED = pygame.transform.scale(self.PALOURDE_BRAS_GAUCHE_IMAGE,(121 // 4, 199 // 4))
         self.PALOURDE_BRAS_DROIT_IMAGE_RESIZED = pygame.transform.scale(self.PALOURDE_BRAS_DROIT_IMAGE,(149 // 4, 199 // 4))
@@ -560,6 +562,9 @@ class Palourde:
 
         sens = dictRequete["sens"]
         # Créé par Robin
+        
+        sens = dictRequete["sens"] # Nathan
+        
         if pygame.time.get_ticks() - self.tempsDernierCoup > 800:
             self.vitesseAvancement += 15 * sens
             self.saut()
@@ -740,7 +745,7 @@ class Palourde:
 
                     self.y = self.ySol + (self.y-self.pointYMax)
 
-                    if abs(self.vitesseChute) > 5*60 and self.modeVersus == True:
+                    if abs(self.vitesseChute) > 8*60 and self.modeVersus == True:
                         self.sante -= abs(self.vitesseChute) / 60
                         self.recoitDegat = True
                     self.timeChute = 0
@@ -759,7 +764,7 @@ class Palourde:
                 elif self.plafond == False and self.sol == False  and objet.collidepoint(self.pointTouche[self.indiceYMin]) and self.pointYMin < self.pointPlafond and collision == False and self.pointTouche[self.indiceYMin][1] > objet.y + objet.height//4:
                     self.calcForceRotation(self.pointTouche[self.indiceYMin][0], self.pointTouche[self.indiceYMin][1], True)
                     self.y = objet.y+objet.height + (self.y-self.pointYMin)
-                    if abs(self.vitesseChute) > 5*60 and self.modeVersus == True:
+                    if abs(self.vitesseChute) > 8*60 and self.modeVersus == True:
                         self.sante -= abs(self.vitesseChute) / 60
                         self.recoitDegat = True
                     self.vitesseChute = 5
@@ -771,7 +776,7 @@ class Palourde:
                 #Collision avec le 'plafond' avec collision avec le sol
                 elif self.plafond == False and self.sol == True  and objet.collidepoint(self.pointTouche[self.indiceYMin]) and self.pointYMin < self.pointPlafond and collision == False:
                     self.calcForceRotation(self.pointTouche[self.indiceYMin][0], self.pointTouche[self.indiceYMin][1], True)
-                    if abs(self.vitesseChute) > 5*60 and self.modeVersus == True:
+                    if abs(self.vitesseChute) > 8*60 and self.modeVersus == True:
                         self.sante -= abs(self.vitesseChute) / 60
                         self.recoitDegat = True
                     self.vitesseChute = 5
@@ -787,7 +792,7 @@ class Palourde:
                     self.murGauche = True
                     self.creationPoint()
 
-                    if abs(self.vitesseAvancement) > 5 and self.modeVersus == True:
+                    if abs(self.vitesseAvancement) > 8 and self.modeVersus == True:
                         self.sante -= abs(self.vitesseAvancement)
                         self.recoitDegat = True
 
@@ -802,7 +807,7 @@ class Palourde:
                     self.murDroit = True
                     self.creationPoint()
 
-                    if abs(self.vitesseAvancement) > 5 and self.modeVersus == True:
+                    if abs(self.vitesseAvancement) > 8 and self.modeVersus == True:
                         self.sante -= abs(self.vitesseAvancement)
                         self.recoitDegat = True
 
@@ -944,7 +949,8 @@ class Palourde:
 class OtherPalourde:
 
 
-    def __init__(self,surface,x : float,y : float, id:int):
+
+    def __init__(self,surface,x : float,y : float, id : int):
         # Créé par Robin
 
         #Cette objet est permet d'afficher uniquement la position des palourdes des autres joueurs avec leurs états
@@ -952,6 +958,7 @@ class OtherPalourde:
         self.surface = surface
         self.x = x
         self.y = y
+        self.ID = id
 
         self.ID = id
 
@@ -1018,6 +1025,8 @@ class OtherPalourde:
         self.degreeBrasDroit = 234
 
         self.pointsCollisions = []
+        
+        self.sante = 100
 
         #on initialise avec des rect qui changeront plus tard, cela permet d'éviter de réinitialiser la variable à chaque fois
         self.rect = [pygame.Rect(self.x,self.y,5,5) for _ in range(5)]
