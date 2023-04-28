@@ -136,22 +136,15 @@ class Game():
             self.updateOtherPalourde()
 
         #Traitement pour déterminer si la partie est finie
-        if self.modeVersus == True:
+        if self.PALOURDE.modeVersus == True and self .frameFin <= 0 and self.MENU.stepMenu != "waitStart" and self.MENU.stepMenu != "player":
             nbPalourdeMorte = 0
             if self.PALOURDE.mort == True:
                 nbPalourdeMorte += 1
-            for palourde in self.ALL_PALOURDE:
+            for palourde in self.ALL_PALOURDES:
                 if palourde.sante <= 0:
                     nbPalourdeMorte += 1
                 if nbPalourdeMorte >= len(self.palourdeEvenement) - 1 :
                         self.frameFin = 200
-
-        
-        #Traitement pour déterminer si la partie est finie
-        if self.modeVersus == True:
-            nbPalourde = 0
-            if self.PALOURDE.mort == True:
-                nbPalourde += 1
         
         if self.frameFin <= 0:
             self.evenementObjet()
@@ -193,7 +186,7 @@ class Game():
                 self.ALL_PALOURDES[id].placement()
                 self.CAMERA.appendPalourde(self.ALL_PALOURDES[id].rect)
                 
-                self.palourdeEvenement!;append(self.ALL_PALOURDES[id])
+                self.palourdeEvenement!.append(self.ALL_PALOURDES[id])
             
 
 
@@ -338,15 +331,15 @@ class Game():
             for rect in autrePalourde.rect:
                 if pygame.Rect.colliderect(rect,self.PALOURDE.brasGaucheRectRotation):
                     if 90 < self.PALOURDE.angle < 270 : 
-                        self.NETWORK_OBJECT.sendTemporyParameter("sens", -1,id)
-                    else:
                         self.NETWORK_OBJECT.sendTemporyParameter("sens", 1,id)
+                    else:
+                        self.NETWORK_OBJECT.sendTemporyParameter("sens", -1,id)
 
                 if pygame.Rect.colliderect(rect,self.PALOURDE.brasDroitRectRotation):
                     if 90 < self.PALOURDE.angle < 270 : 
-                        self.NETWORK_OBJECT.sendTemporyParameter("sens", 1,id)
-                    else:
                         self.NETWORK_OBJECT.sendTemporyParameter("sens", -1,id)
+                    else:
+                        self.NETWORK_OBJECT.sendTemporyParameter("sens", 1,id)
 
     def retourMenu(self):
         # if len(self.palourdeEvenement) > 1 :
@@ -354,7 +347,8 @@ class Game():
             self.NETWORK_OBJECT.close()
             self.NETWORK_OBJECT = None
         self.ALL_PALOURDES = {}
-        self.MENU.switchMenu("title")   
+        self.PALOURDE.changementModeNormal()
+        self.MENU.switchMenu("title")
 
     def evenementObjet(self) -> None:
         if "ligneArrivee" in self.MENU.listObjectInstancies:
