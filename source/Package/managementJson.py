@@ -18,7 +18,7 @@ class Map():
         self.SCREEN_HEIGHT : int = height  
         
     def traitement(self, directory):
-        
+        # par Nathan et Lucie
         with open(directory) as file:
             self.data = json.load(file)
             self.imagePath = self.data["header"]["imagePath"]
@@ -77,6 +77,7 @@ class Map():
                         self.listObject[object["layer"]].append(self.sprite)
                     
     def object_Instancy(self, type, object):
+        # par Nathan et Lucie
         objectInstancy = None
 
         if type == "button":
@@ -107,6 +108,7 @@ class Map():
     
 
     def tranformX(self, x : str | int |float | list, width : int|float) -> int | float:
+        # par Nathan
         xTotal = 0
         if type(x) != list:
             x = [x]
@@ -124,6 +126,7 @@ class Map():
         return xTotal
     
     def tranformY(self, y : str | int |float | list, height : int|float) -> int | float:
+        # par Nathan
         yTotal = 0
         if type(y) != list:
             y = [y]
