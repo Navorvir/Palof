@@ -134,18 +134,25 @@ class Game():
 
         if self.NETWORK_OBJECT != None and self.gameStarted and self.NETWORK_OBJECT.gameStarted:
             self.updateOtherPalourde()
-        
+
         #Traitement pour déterminer si la partie est finie
         if self.modeVersus == True:
             nbPalourdeMorte = 0
             if self.PALOURDE.mort == True:
                 nbPalourdeMorte += 1
-            for palourde in self.ALL_PALOURDEs:
+            for palourde in self.ALL_PALOURDE:
                 if palourde.sante <= 0:
                     nbPalourdeMorte += 1
-                if nbPalourdeMorte >= len(self.âlourdeEvenement) - 1 :
+                if nbPalourdeMorte >= len(self.palourdeEvenement) - 1 :
                         self.frameFin = 200
-                 
+
+        
+        #Traitement pour déterminer si la partie est finie
+        if self.modeVersus == True:
+            nbPalourde = 0
+            if self.PALOURDE.mort == True:
+                nbPalourde += 1
+        
         if self.frameFin <= 0:
             self.evenementObjet()
         else:
@@ -178,7 +185,7 @@ class Game():
             if int(id) != self.NETWORK_OBJECT.ID_CLIENT_HOST and data[id]["sante"] > 0:   
                 self.ALL_PALOURDES[id].x = data[id]["x"] + self.CAMERA.startX
                 self.ALL_PALOURDES[id].y = data[id]["y"] + self.CAMERA.startY
-                
+
                 self.ALL_PALOURDES[id].sante = data[id]["sante"]
 
                 self.ALL_PALOURDES[id].angle = data[id]["angle"]
@@ -200,7 +207,6 @@ class Game():
     def lockCamera(self, x : int = 500, y : int = 250) -> None:
       
         self.PALOURDE.lockCamera(x,y)
-        self.CAMERA.lockCamera()
 
     def unlockCamera(self) -> None:
         self.PALOURDE.cameraLock = False
@@ -341,15 +347,20 @@ class Game():
                         self.NETWORK_OBJECT.sendTemporyParameter("sens", -1,id)
 
     def retourMenu(self):
-        if len(self.palourdeEvenement) > 1 :
+        # if len(self.palourdeEvenement) > 1 :
+        if self.NETWORK_OBJECT != None:
             self.NETWORK_OBJECT.close()
-        self.MENU.switchMenu("title")
-        self.lockCamera                 
+            self.NETWORK_OBJECT = None
+        self.ALL_PALOURDES = {}
+        self.MENU.switchMenu("title")   
 
     def evenementObjet(self) -> None:
         if "ligneArrivee" in self.MENU.listObjectInstancies:
             for ligneArrivee in self.MENU.listObjectInstancies["ligneArrivee"].values():
                 if ligneArrivee.verification(self.palourdeEvenement,self.PALOURDE.xCamera,self.PALOURDE.yCamera) == True:
+                    print("Finit")
+                    self.retourMenu()
+
                     self.frameFin = 200
 
 if __name__ == "__main__":
