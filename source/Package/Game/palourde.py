@@ -1007,6 +1007,8 @@ class OtherPalourde:
         self.degreeBrasDroit = 234
 
         self.pointsCollisions = []
+        
+        self.sante = 100
 
         #on initialise avec des rect qui changeront plus tard, cela permet d'éviter de réinitialiser la variable à chaque fois
         self.rect = [pygame.Rect(self.x,self.y,5,5) for _ in range(5)]
