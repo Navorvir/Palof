@@ -11,7 +11,7 @@ Il est nécessaire d'avoir une version python supèrieur à **python 3.10**. De 
 Si la bibliothèque n'est pas installée, vous devez les installer par cette commande:
 py -m pip <nom de la bibothèque python>
 
-Si vous voulez jouer à plusieurs, vous devez choisir un joueur hôte qui permettra le lien entre tous les appareils. Pour ce faire, le joueur hôte doit s'appairer aux différents appareils clients pour permettre la connexion Bluetooth.
+Si vous voulez jouer à plusieurs, vous devez choisir un joueur hôte qui permettra le lien entre tous les appareils. Pour ce faire, le joueur hôte doit s'appairer aux différents appareils clients pour permettre la connexion Bluetooth. Si vous ne savez pas comment faire **[cliquer ici!](https://support.microsoft.com/fr-fr/windows/coupler-un-p%C3%A9riph%C3%A9rique-bluetooth-dans-windows-2be7b51f-6ae9-b757-a3b9-95ee40c3e242)**
 
 ## Lancement
 
