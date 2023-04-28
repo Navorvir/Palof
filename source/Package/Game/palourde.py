@@ -91,7 +91,9 @@ class Palourde:
         self.degreeBrasDroit : float = 234
         self.isKicking : bool = False
         self.etapeKick : int = 1
-        self.sante : float = 10
+
+        self.sante : float = 300
+
         self.recoitDegat : bool = False
         self.frameRouge : int = 0
         self.mort : bool = False
@@ -501,7 +503,9 @@ class Palourde:
         """
         # Créé par Robin
         self.modeVersus = False
-        self.sante = 10
+
+        self.sante = 300
+
         self.mort = False
         self.PALOURDE_IMAGE_RESIZED = pygame.transform.scale(self.PALOURDE_IMAGE, (self.LARGEUR, self.HAUTEUR))
         self.frameRouge = 0
@@ -520,7 +524,7 @@ class Palourde:
         """
         # Créé par Robin
         self.modeVersus = True
-        self.sante = 100
+        self.sante = 300
         self.mort = False
         self.PALOURDE_IMAGE_RESIZED = pygame.transform.scale(self.PALOURDE_IMAGE, (self.LARGEUR, self.HAUTEUR))
 
