@@ -265,7 +265,7 @@ class Game():
         # Par Nathan
 
         self.NETWORK_OBJECT = Client(self.PALOURDE)
-        print(self.MENU.listObjectInstancies["input"]["networkCode"])
+        
         self.MENU.listObjectInstancies["input"]["networkCode"].setCommand(self.checkCode)
    
     def createParty(self) -> None:
