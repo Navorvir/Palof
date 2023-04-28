@@ -7,7 +7,9 @@ Image de la palourde avec ses points de collision
 
 ![image](https://user-images.githubusercontent.com/116309446/235143496-8c5c31ea-ba0a-4f39-a7cd-3370ac10744d.png)
 
+Pour ce qui est de la réaction aux collision, nous essayons dans un premier temps de détecter quelle type de collision nous avons entre une collision avec le sol, une collision avec le côté droit d'un mur ou le côté gauche d'un mur et une collision avec la bas d'un Rect .Après que la palourde détecte une collision, en fonction du type elle va mettre sa vitesse à la racine carré de son oposée ou juste la remettre à 0 .
 
+De plus, nous avons aussi ajouté un moyen pour la palourde de tourner sur elle même et donc subir la gravité lorsque se trouve sur le sol sans faire de mouvement
 
 ## La Partie Reseau 
 Le reseau fonctionne en Bluetooth par l'intermédiaire de la library socket. De plus, la gestion du réseau c'est à dire traiter les réponses et envoyer les requetes fonctionne grâce à la library selector (la réception) et threading. 
