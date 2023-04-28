@@ -14,3 +14,4 @@ De plus, nous avons aussi ajouté un moyen pour la palourde de tourner sur elle 
 ## La Partie Reseau 
 Le reseau fonctionne en Bluetooth par l'intermédiaire de la library socket. De plus, la gestion du réseau c'est à dire traiter les réponses et envoyer les requetes fonctionne grâce à la library selector (la réception) et threading. 
 
+![gif 2](https://user-images.githubusercontent.com/116309446/235164711-80441daf-7d7a-41f9-b786-5d0a037b0d44.gif)
