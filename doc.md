@@ -27,10 +27,12 @@ Nous faisons l'usage d'une caméra dans notre jeu, pour cela, nous devons faire 
 
 <img src="https://user-images.githubusercontent.com/116309446/235170924-1d803e5d-6fc7-4a2e-9d93-f3046e7f6ce7.PNG" alt="My cool logo" width="800"/>
 
+
 ## Le Reseau Bluetooth
 Le réseau était une partie assez complexe et très intéressante à la fois car d'une part j'avais jamais utilisé les bibliothèques threading et socket, mais d'une autre part ce projet m'a permit d'apprendre beaucoup sur la programmation concurrentielle et surtout les interfaces réseaux Bluetooth en Python. 
 
-### Json
+
+### Requète Json
 Les requètes se présentent sous la forme d'un format JSON contenant une clé **"code"** pour la siginifcation de la requète et une clé **"data"** pour les données envoyées.
 
 <img src="https://user-images.githubusercontent.com/86235354/235190388-9e52aa9b-90a9-41aa-a49d-0f68ffd4050c.png" alt="requete" width="200"/>
@@ -38,6 +40,7 @@ Les requètes se présentent sous la forme d'un format JSON contenant une clé *
 
 ### Le Threading
 L'une des première notion importante est la programmation concurrentielle qui permet à l'ordinateur de faire plusieurs taches à la fois comme par exemple en utilisant des Thread. Ce type de programmation peut être comparé à un restaurant de burger. Par exemple, vous programmez de manière linéaire chaques étapes du burger se fait à la suite ainsi si je prends 2 minutes pour chaques étapes (griller le pain, cuire le steak...) à la fais je vais arriver à 12min si j'en ai 6. Si maintenant, je le fais de manière concurrentielle, je lance mais steak à cuire puis en même temps je commence à cuire mon pain et par conséquence à la place de prendre 12min je vais prendre 3-4 minutes. De plus le threading est nécessaire car sans ça le jeu ne pourrait pas tourner en même temps et recevoir les nouvelles données en arrière-plan sans avoir de latence.
+
 
 ### Les Selectors
 Cette technologie permet la gestion des réponses de manière efficace pour pouvoir attendre les réponses des autres interfaces en même temps sans utiliser une boucle par connexion. Cette bibliothèque fonctionne avec les méthodes **register** et **unregister permettant d'identifier qui envoie la requête. Elle attend une réponse pour commencer après à rechercher une autre réponse.
@@ -65,8 +68,13 @@ La partie complexe était de gérer la partie client host de l'objet serveur et 
 ### Client
 La première chose que fait le client après avoir initialisé est la demande de son ID et des paramètres pour que le serveur et le client fonctionne bien et travaille sur les mêmes choses.
 
+
+
+## GameDisgne
+
 ### Traitement json
 Les maps des niveaux et les éléments des différentes scènes sont stockés dans des fichiers json sous forme de dictionnaire. Pour chaque élément ont vérifie si il possède des coordonnées, une image ou une couleur (si il n'y en a pas, la couleur par défaut est le noir). Le rect et l'image de chaque élément est mis dans une liste en fonction de la couche auquel il appartient (1er plan, 2eme plan, 3eme plan).  De plus si des éléments ont un type (comme les boutons) et que ce type existe un objet est instancié. Cette liste est envoyée à la caméra quand la map est chargé pour qu'elle les affiches.
+
 
 ### Menu
 Le menu est composé de différentes scènes, l'écran titre, l'écran du choix du mode, l'écran du choix du niveau, et l'écran pour se connecter en réseau. Pour changer de scène change la variable map qui stocke le chemin d'accès du fichier json correspondant et on charge la carte. Pour savoir quand changer scène on regarde les collisions de la palourde avec les bords de l'écran et on regarde les différents boutons. Ces derniers peuvent prendre une fonction et des arguments et lorsqu'ils sont presser ils les exécutent.
