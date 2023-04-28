@@ -40,3 +40,6 @@ En allant à gauche le joueur tombe sur le menu qui propose un champ de texte po
 - barre espace / flèche directionnel haut : sauter
 - left shift : taper (s'active seulement dans le mode versus)
 - double échap : retourner au menu
+
+## liste des images utiliés :
+-[background_palof.png](./source/Assets/Background/background_palof.png)
