@@ -146,11 +146,11 @@ class Game():
             self.updateOtherPalourde()
 
         #Traitement pour déterminer si la partie est finie
-        if self.modeVersus == True:
+        if self.PALOURDE.modeVersus == True and self .frameFin <= 0 and self.MENU.stepMenu != "waitStart" and self.MENU.stepMenu != "player":
             nbPalourdeMorte = 0
             if self.PALOURDE.mort == True:
                 nbPalourdeMorte += 1
-            for palourde in self.ALL_PALOURDE:
+            for palourde in self.ALL_PALOURDES.values():
                 if palourde.sante <= 0:
                     nbPalourdeMorte += 1
                 if nbPalourdeMorte >= len(self.palourdeEvenement) - 1 :
@@ -360,8 +360,6 @@ class Game():
             self.NETWORK_OBJECT.close()
             self.NETWORK_OBJECT = None
         self.ALL_PALOURDES = {}
-
-
         self.PALOURDE.changementModeNormal()
         self.MENU.switchMenu("title")
 
