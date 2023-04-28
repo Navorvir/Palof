@@ -16,13 +16,13 @@ Le reseau fonctionne en Bluetooth par l'intermédiaire de la library socket. De 
 
 
 
-###Les mouvements du jeu
+##Les mouvements du jeu
 Afin d'avoir un mouvement qui ressemble à celui d'un objet ovale qui roule, nous avons utilisé la fonction cosinus étant donné que sa courbe ressemble à un grand point à celle de l'accélération d'un objet ovale qui roule en fonction de son angle de rotation .Avec la valeur de cosinus, nous ajoutons une valeur suplémentaire correspondant à la force de la palourde qui est utilisé afin de se déplacer
 
 ![cos](https://user-images.githubusercontent.com/116309446/235167732-ee1b32a9-7e25-4862-acdd-ca46155a0562.jpg)
 
 
-###La caméra
+##La caméra
 Nous faisons l'usage d'une caméra dans notre jeu, pour cela, nous devons faire déplacer tous les objets se trouvants dans la carte actuel, puis nous affichons et testons les collisions de seulement ceux qui se trouve à une certaine distance de la palourde, nous pouvons le savoir grâce à une recherche dichotomique .Donc lors des déplacements de la palourde nous ne devons pas trop changer les coordonnées de la palourde parce que sinon la palourde finira par être afficher en dehors de la limite de l'écran daffichage (vous pouvez vous référencier au schéma ci-dessous) .Pour contrer cela, notre palourde possède deux groupes deux variable de coordonnée, le prier est regroupe la variable x et y (qui correspond alors à l'endroit où la palourde s'affichera sur l'écran) et le second regroupe les variable xCamera et yCamera (qui correspond aux coordonnées de la caméra) .Alors lorsque la palourde se déplace, les coordonnées xCamera et yCamera sont ceux qui change alors kes varialbel x et y reste les même à part lorsque la palourde rentre en collision, ses coordonnées x et y sont changer afin de pouvoir effectuer les collision (mais sont remis à leur valeur d'origine après un mouvement fluide de la camera)
 
 ![schéma écran palourde](https://user-images.githubusercontent.com/116309446/235170924-1d803e5d-6fc7-4a2e-9d93-f3046e7f6ce7.PNG)
