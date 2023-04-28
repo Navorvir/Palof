@@ -7,7 +7,7 @@ from os import path
 class Palourde:
 
 
-    def __init__(self,surface,x : float,y : float):
+    def __init__(self,surface, x : float,y : float):
         #Créé par Robin
         self.surface = surface
         self.x : float = self.surface.get_width()//2
