@@ -140,7 +140,7 @@ class Game():
             nbPalourdeMorte = 0
             if self.PALOURDE.mort == True:
                 nbPalourdeMorte += 1
-            for palourde in self.ALL_PALOURDES:
+            for palourde in self.ALL_PALOURDES.values():
                 if palourde.sante <= 0:
                     nbPalourdeMorte += 1
                 if nbPalourdeMorte >= len(self.palourdeEvenement) - 1 :
