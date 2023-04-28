@@ -1,5 +1,5 @@
 from datetime import datetime
-from uuid import getnode
+import psutil
 
 def showMessage(text, *args) -> None:
     """Affiche un texte avec la date de l'affichage
@@ -27,8 +27,6 @@ def checkValueList(keys : list, list : list) -> bool:
             return False
     return True
 
-def getMacBluetooth():
-    return hex(getnode())
 
 def convertHexToBase36(hexValue : int) -> str:
     """Permet de convertir un nombre en base de 10 en base de 36
@@ -132,8 +130,14 @@ def getMacBluetooth():
     Returns:
         tuple(str, str): donne l'addresse mac et le code 
     """
-    mac = hex(getnode())[2:]
-    return formatAddress(mac), convertHexToBase36(mac)
+     
+    address = ""
+    for interface, addrs in psutil.net_if_addrs().items():
+        for addr in addrs:
+            if 'Bluetooth' in interface:
+                if addr.family == psutil.AF_LINK:
+                   address = addr.address
+                   return address.replace("-",":"), convertHexToBase36(addr.address.replace("-",""))
 
 if __name__ =="__main__":
     mac = "002200220022"

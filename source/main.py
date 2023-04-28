@@ -322,10 +322,16 @@ class Game():
         for id, autrePalourde in self.ALL_PALOURDES.items():
             for rect in autrePalourde.rect:
                 if pygame.Rect.colliderect(rect,self.PALOURDE.brasGaucheRectRotation):
-                    self.NETWORK_OBJECT.sendTemporyParameter("sens", -1,id)
+                    if 90 < self.PALOURDE.angle < 270 : 
+                        self.NETWORK_OBJECT.sendTemporyParameter("sens", -1,id)
+                    else:
+                        self.NETWORK_OBJECT.sendTemporyParameter("sens", 1,id)
 
                 if pygame.Rect.colliderect(rect,self.PALOURDE.brasDroitRectRotation):
-                    self.NETWORK_OBJECT.sendTemporyParameter( "sens", -1,id)
+                    if 90 < self.PALOURDE.angle < 270 : 
+                        self.NETWORK_OBJECT.sendTemporyParameter("sens", 1,id)
+                    else:
+                        self.NETWORK_OBJECT.sendTemporyParameter("sens", -1,id)
 
     def retourMenu(self):
         if len(self.palourdeEvenement) > 1 :
