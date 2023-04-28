@@ -30,27 +30,37 @@ Nous faisons l'usage d'une caméra dans notre jeu, pour cela, nous devons faire 
 ## Le Reseau Bluetooth
 Le réseau était une partie assez complexe et très intéressante à la fois car d'une part j'avais jamais utilisé les bibliothèques threading et socket, mais d'une autre part ce projet m'a permit d'apprendre beaucoup sur la programmation concurrentielle et surtout les interfaces réseaux Bluetooth en Python. 
 
+### Json
+Les requètes se présentent sous la forme d'un format JSON contenant une clé **"code"** pour la siginifcation de la requète et une clé **"data"** pour les données envoyées.
+
+<img src="https://user-images.githubusercontent.com/86235354/235190388-9e52aa9b-90a9-41aa-a49d-0f68ffd4050c.png" alt="requete" width="200"/>
+
+
 ### Le Threading
-L'une des première notions importante est la programmation concurentielle qui permet à l'ordinateur de faire plusieurs taches à la fois comme par exemple en utilisant des Thread. Ce type de programmation peut être comparé à un restaurant de burger. Par exemple vous programmer de manière linéaire chaques étapes du burger se fait à la suite ainsi si je prends 2 minutes pour chaques étépes (griller le pain, cuire le steak...) à la fais je vais arriver à 12min si j'en ai 6. Si maitenant je le fais de manière concurentielle, je lance mais steak à cuire puis en même temps je commence à cuire mon pain et par conséquence à la place de prendre 12min je vais prendre 3-4 minutes. De plus le threading est nécessaire car sans ça le jeu ne pourrais pas tourner en même temps et recevoir les nouvelles données en arrière plan sans avoir de latence.
+L'une des première notion importante est la programmation concurrentielle qui permet à l'ordinateur de faire plusieurs taches à la fois comme par exemple en utilisant des Thread. Ce type de programmation peut être comparé à un restaurant de burger. Par exemple, vous programmez de manière linéaire chaques étapes du burger se fait à la suite ainsi si je prends 2 minutes pour chaques étapes (griller le pain, cuire le steak...) à la fais je vais arriver à 12min si j'en ai 6. Si maintenant, je le fais de manière concurrentielle, je lance mais steak à cuire puis en même temps je commence à cuire mon pain et par conséquence à la place de prendre 12min je vais prendre 3-4 minutes. De plus le threading est nécessaire car sans ça le jeu ne pourrait pas tourner en même temps et recevoir les nouvelles données en arrière-plan sans avoir de latence.
 
 ### Les Selectors
-Cette technologie peremet la gestion des réponses de manière efficace pour pouvoir attendre les réponses des autres interfaces en même temps sans utiliser une boucle par connection. Cette bibliothèque fonctionne avec les méthodes **register** et **unregister permetant d'identenfier qui envoie la requete. Elle attend une réponse pour commencer après à rechercher une autres réponses.
+Cette technologie permet la gestion des réponses de manière efficace pour pouvoir attendre les réponses des autres interfaces en même temps sans utiliser une boucle par connexion. Cette bibliothèque fonctionne avec les méthodes **register** et **unregister permettant d'identifier qui envoie la requête. Elle attend une réponse pour commencer après à rechercher une autre réponse.
 
 Du cotés serveur, elle se comporte en deux étapes une requete qui entre chez le serveur et demande à se connecter activer la méthode **acceptClient** qui s'occupera de l'initialisation de ce nouveau client avec notemment l'objet **InteractClient** et si une requete arrive et qu'il est déja connu de le selector envoit les données vers la méthode **read** propre à l'objet **InteractClient**.
 
 Du cotés client une seule étape est nécessaire car dés lors il est connecté au serveur il reçoit toujours le même type de requete.
 
+Cependant ce qui peut survenir est que la requète d'avant et celle la requète actuelle du client se retrouve ensemble dans la réception chez le serveur ce qui peut donner par exemple *'{"code" : X, "data" : X}{"code" : X, "data" : X}'*. Ceci est une forme de surcharge qui pousse à vérifier si il y a plusieurs requete en vérifiant si *'{"code"'* est plusieurs fois. Cette mécanique est utiliser pour envoyer plusieurs requètes cotés client comme par exemple lorsqu'un joueur pousse un autre joueur.
+
+
 ### Socket
-Pour que le socket focntionne en bluetooth, il comporte 3 arguments:
-- **AF_BLUETOOTH** -> Bluetooth
-- **SOCK_STREAM **-> Type socket (defaut)
-- **BTPROTO_RFCOMM** -> Protocole (accepte (bdaddr, channel))
+Le seveur bluetooth tourne sur le port **30** pour fonctionner avec une adresse MAC propre à chaque machine.
+
+Pour que le socket focntionne en bluetooth, il comporte 3 arguments :
+- **AF_BLUETOOTH** : correspond au protocole Bluetooth
+- **SOCK_STREAM** : le type de socket (celui par defaut)
+- **BTPROTO_RFCOMM** -> Protocole pour accepter les interfaces réseaux(accepte (bdaddr, channel))
 
 
 ### Server
+La partie complexe était de gérer la partie client host de l'objet serveur et la partie gestions des autres clients donc la nécessité de bien s'organiser en créant un objet de base réseau **NetowrkObject** et de créer un objet spécial pour la gestion de chaque client coté serveur **InteractClient** avec un objet principal **Server**. La gestion de la réponse d'un client se fait par un dictionnaire **MANAGEMENT_RESPONSE** qui contient un code lié à une méthode.
 
 
 ### Client
-
-
-
+La première chose que fait le client après avoir initialisé est la demande de son ID et des paramètres pour que le serveur et le client fonctionne bien et travaille sur les mêmes choses.
