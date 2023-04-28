@@ -146,7 +146,7 @@ class Game():
             self.updateOtherPalourde()
 
         #Traitement pour déterminer si la partie est finie
-        if self.PALOURDE.modeVersus == True and self .frameFin <= 0 and self.MENU.stepMenu != "waitStart" and self.MENU.stepMenu != "player":
+        if self.PALOURDE.modeVersus == True and self.frameFin <= 0 and self.MENU.stepMenu != "waitStart" and self.MENU.stepMenu != "player":
             nbPalourdeMorte = 0
             if self.PALOURDE.mort == True:
                 nbPalourdeMorte += 1
