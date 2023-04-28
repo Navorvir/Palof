@@ -14,7 +14,12 @@ import threading
 
         
 class Game():
+    """Objet Primaire de ce projet permetant de relier toutes les fonctionnalités du jeu. De plus, il permet de controler de le jeu
+    """
+
     def __init__(self):
+        """Initialise les variables et les constantes
+        """
 
         pygame.init()
 
@@ -36,7 +41,6 @@ class Game():
 
         self.NETWORK_OBJECT = None
 
-
         self.MENU : Menu = Menu(self.SCREEN_WIDTH, self.SCREEN_HEIGHT, self.SCREEN, self.PALOURDE, self.CAMERA)
 
         # PARAMETRES SUBTILES
@@ -51,9 +55,9 @@ class Game():
         self.modeVersus : bool = False
 
         self.problem : str = ""
-        self.frameFin = 0
 
-        self.etapeEscape=0
+        self.frameFin : int = 0
+        self.etapeEscape : int = 0
         
         # Background
         self.spriteBackground : list = [self.BACKGROUND_IMAGE,self.BACKGROUND_IMAGE]
@@ -62,9 +66,14 @@ class Game():
 
     # ================== METHODES =======================
 
-    # Methodes controle etat game
+    # --------------- Methodes Principale ----------------
     def run(self) -> None:
-        # self.BACKGROUND = self.MENU.BACKGROUND
+        """Lance la boucle du jeu mettant à jour l'affichage
+        """
+
+        # Par Tout le monde
+
+
         self.lockCamera()
 
         # Boucle Principale du jeu
@@ -74,9 +83,12 @@ class Game():
             for event in pygame.event.get():
                 if event.type == pygame.QUIT :
                     self.quit()
+
                 if event.type == pygame.KEYDOWN:
                     self.MENU.checkInput(event)
+
                     if event.key == pygame.K_ESCAPE:
+
                         if self.MENU.stepMenu == None:
                             if self.etapeEscape == 0:
                                 self.timeMesure = pygame.time.get_ticks()
@@ -85,25 +97,32 @@ class Game():
                                 self.retourMenu()
                                 self.etapeEscape = 0
                             else :
-                                self.etapeEscape=0  
-              
-            
+                                self.etapeEscape=0   
          
-
             self.updateGame()
-           
             pygame.display.update()           
-    
-
                 
     def quit(self) -> None:
+        """Arrête le programme
+        """
+
+        # Par Nathan
+
         self.running = False
         pygame.quit()
         sys.exit()
         
+
+    # --------------- Methodes Updates ----------------
     def updateGame(self) -> None:
+        """Met à jour et vérifie de nombreux paramètres avec les entrées du joueur
+        """
+
+        # par Nathan et Robin
+
         self.SCREEN.fill(self.BACKGROUND)
-        # self.background()
+        # self.background() # si vous avez un bon pc vous pouvez tester ça
+
         if self.PALOURDE.mort:
             threading.Timer(0.2, self.gameOver) # evite qu'il soit bloqué à 1 coté serveur
 
@@ -112,8 +131,6 @@ class Game():
             self.MENU.switchSceneEnable = False
         self.MENU.update()
         
-        
-
         # INPUTS
         keys = pygame.key.get_pressed()
 
@@ -125,27 +142,25 @@ class Game():
         else:
             self.PALOURDE.roule = False
 
-        #nouveau
         if keys[pygame.K_LSHIFT] and self.PALOURDE.modeVersus == True:
             self.PALOURDE.attaquePalourde()
             self.detectionCoupPalourde()
-        
 
         if self.PALOURDE.timeChute <= 6 / 30 and self.PALOURDE.onGround == True and (keys[pygame.K_SPACE] or keys[pygame.K_UP]):
             self.PALOURDE.saut()
 
-        self.CAMERA.moveCamera(self.PALOURDE.xCamera,self.PALOURDE.yCamera)
 
-           # Update Affichage
+        # Update Affichage
+        self.CAMERA.moveCamera(self.PALOURDE.xCamera,self.PALOURDE.yCamera)
         self.CAMERA.updateDisplay(self.PALOURDE)
 
-        #Initialisation de la sauvegarde des palourde pour effectuer les événements des objets spéciaux
+        # Initialisation de la sauvegarde des palourde pour effectuer les événements des objets spéciaux
         self.palourdeEvenement = [self.PALOURDE]
 
         if self.NETWORK_OBJECT != None and self.gameStarted and self.NETWORK_OBJECT.gameStarted:
             self.updateOtherPalourde()
 
-        #Traitement pour déterminer si la partie est finie
+        # Traitement pour déterminer si la partie est finie
         if self.PALOURDE.modeVersus == True and self.frameFin <= 0 and self.MENU.stepMenu != "waitStart" and self.MENU.stepMenu != "player":
             nbPalourdeMorte = 0
             if self.PALOURDE.mort == True:
@@ -156,9 +171,6 @@ class Game():
                 if nbPalourdeMorte >= len(self.palourdeEvenement) - 1 :
                         self.frameFin = 200
 
-        
-
-        
         if self.frameFin <= 0:
             self.evenementObjet()
         else:
@@ -166,11 +178,15 @@ class Game():
         if self.frameFin == 1:
             self.retourMenu()
         
-
+        # Met à jour la position de la palourde
         self.PALOURDE.framePalourde(self.CAMERA.getSpriteActual())
-        pygame.display.update()        
     
-    def updateOtherPalourde(self):
+    def updateOtherPalourde(self) -> None:
+        """Met à jour la position des autres palourdes, des autres joueurs avec les valeurs du client/serveur
+        """
+
+        # Par Nathan
+
         data = self.NETWORK_OBJECT.getData()
 
         # Vérifie si toutes les palourdes on bien été connecté
@@ -200,77 +216,15 @@ class Game():
                 self.CAMERA.appendPalourde(self.ALL_PALOURDES[id].rect)
                 
                 self.palourdeEvenement.append(self.ALL_PALOURDES[id])
-            
-
-
-        
-
-    def background(self) -> None:
-        self.cooBackground[0][0]= self.PALOURDE.xCamera // 1920 * 1920 - self.PALOURDE.xCamera 
-        self.cooBackground[1][0]= (self.PALOURDE.xCamera // 1920 + 1) * 1920 - self.PALOURDE.xCamera 
-        
-        for i in range(2):
-            self.SCREEN.blit(self.spriteBackground[i], (self.cooBackground[i][0], self.cooBackground[i][1]))
-
-    def lockCamera(self, x : int = 500, y : int = 250) -> None:
-      
-        self.PALOURDE.lockCamera(x,y)
-
-    def unlockCamera(self) -> None:
-        self.PALOURDE.cameraLock = False
-        self.CAMERA.unlockCamera()
-
-    def tranformCoo(self, xUser : str | int |float , yUser: str | int |float ) -> int | float:
-        if xUser == "center":
-            x = (self.PALOURDE.surface.get_width() - self.PALOURDE.LARGEUR) // 2
-        elif xUser == "end":
-            x = self.PALOURDE.surface.get_width() - self.PALOURDE.LARGEUR - 10
-        elif xUser == "start":
-            x = 0
-        elif xUser == "current":
-            x = self.PALOURDE.x
-        else:
-            x = xUser
-
-        if yUser == "center":
-            y = (self.PALOURDE.surface.get_height()-self.PALOURDE.HAUTEUR)//2
-        elif yUser == "current":
-            y = self.PALOURDE.y
-        elif yUser == "start":
-            y = 0
-        elif yUser == "end":
-            y = self.PALOURDE.y - self.PALOURDE.HAUTEUR- 10
-        else:
-            y = yUser
-        
-        return x, y
-
-    def waitGameStarted(self) -> None:
-
-        while not self.NETWORK_OBJECT.gameStarted:
-            time.sleep(0.5)
-            
-        self.gameStarted = True
-        self.MENU.mode = self.NETWORK_OBJECT.mode
-
-        # Mettre les bonnes options suivant le mode
-        if self.MENU.mode == self.MENU.MODE_VERSUS:
-            self.PALOURDE.changementModeVersus()
-        else:
-            self.PALOURDE.changementModeNormal()
-
-        time.sleep(1) # laisse un peu de temps au chargement
-        self.loadMap(self.NETWORK_OBJECT.levelName)
-
-    def gameOver(self):
-        self.MENU.listObjectInstancies["text"]["gameOver"].setText("Game Over!")
-        self.NETWORK_OBJECT.gameStarted = False
 
     def loadMap(self, map : str) -> None:
+        """Charge la map en récupérant le fichier, en positionnant la palourde et en mettant à jour les variable de la camera
+
+        Args:
+            map (str): _description_
+        """
         testMap = Map()
 
- 
-        
         testMap.traitement(map)
   
         listObject = testMap.listObject
@@ -301,15 +255,18 @@ class Game():
         elif self.MENU.NAME_MENU["wait"]["path"] == self.MENU.map and not self.clientEnable:
             self.joinParty()
             self.clientEnable = True   
-
    
+
+    # --------------- Methodes Réseaux ----------------
+    def joinParty(self) -> None:
+        self.NETWORK_OBJECT = Client(self.PALOURDE)
+        self.MENU.listObjectInstancies["input"]["networkCode"].setCommand(self.checkCode)
    
     def createParty(self) -> None:
         self.NETWORK_OBJECT = Server(self.PALOURDE)
    
         threading.Thread(target=self.NETWORK_OBJECT.startServer, daemon=True).start()
         self.NETWORK_OBJECT.setTypeGame(self.MENU.mode,self.MENU.mapChose)
-
 
     def startParty(self):
         time.sleep(1)
@@ -319,25 +276,46 @@ class Game():
 
         time.sleep(1)
         self.MENU.startParty()
+    
+    def waitGameStarted(self) -> None:
 
+        while not self.NETWORK_OBJECT.gameStarted:
+            time.sleep(0.5)
+            
+        self.gameStarted = True
+        self.MENU.mode = self.NETWORK_OBJECT.mode
 
-    def joinParty(self) -> None:
-        self.NETWORK_OBJECT = Client(self.PALOURDE)
-        self.MENU.listObjectInstancies["input"]["networkCode"].setCommand(self.checkCode)
-   
-
-    def checkCode(self, code) -> None:
-        self.NETWORK_OBJECT.setMacServerAddress(code)
-        if self.NETWORK_OBJECT.startClient():
-            threading.Thread(target=self.waitGameStarted, daemon=True).start()
-            self.MENU.listObjectInstancies["text"]["probleme"].setText("Le client s'est connecté. Attend que le serveur lance la partie...")
+        # Mettre les bonnes options suivant le mode
+        if self.MENU.mode == self.MENU.MODE_VERSUS:
+            self.PALOURDE.changementModeVersus()
         else:
-            self.MENU.listObjectInstancies["text"]["probleme"].setText(self.NETWORK_OBJECT.problem)
+            self.PALOURDE.changementModeNormal()
 
-    def playerLeave(self, idPalourde : int) -> None:
-        if idPalourde in self.ALL_PALOURDES:
-            self.ALL_PALOURDES.pop(idPalourde)
+        time.sleep(1) # laisse un peu de temps au chargement
+        self.loadMap(self.NETWORK_OBJECT.levelName)
 
+
+    # --------------- Methodes Cameras ----------------
+    def background(self) -> None:
+        self.cooBackground[0][0]= self.PALOURDE.xCamera // 1920 * 1920 - self.PALOURDE.xCamera 
+        self.cooBackground[1][0]= (self.PALOURDE.xCamera // 1920 + 1) * 1920 - self.PALOURDE.xCamera 
+        
+        for i in range(2):
+            self.SCREEN.blit(self.spriteBackground[i], (self.cooBackground[i][0], self.cooBackground[i][1]))
+
+    def lockCamera(self, x : int = 500, y : int = 250) -> None:
+      
+        self.PALOURDE.lockCamera(x,y)
+
+    def unlockCamera(self) -> None:
+        self.PALOURDE.cameraLock = False
+        self.CAMERA.unlockCamera()
+
+
+    # ----- Methodes Controle etat du jeu --------
+    def gameOver(self):
+        self.MENU.listObjectInstancies["text"]["gameOver"].setText("Game Over!")
+        self.NETWORK_OBJECT.gameStarted = False
     
     def detectionCoupPalourde(self):
         for id, autrePalourde in self.ALL_PALOURDES.items():
@@ -354,16 +332,6 @@ class Game():
                     else:
                         self.NETWORK_OBJECT.sendTemporyParameter("sens", 1,id)
 
-    def retourMenu(self):
-        # if len(self.palourdeEvenement) > 1 :
-        if self.NETWORK_OBJECT != None:
-            self.NETWORK_OBJECT.close()
-            self.NETWORK_OBJECT = None
-        self.ALL_PALOURDES = {}
-        self.PALOURDE.changementModeNormal()
-        self.MENU.switchMenu("title")
-
-
     def evenementObjet(self) -> None:
         if "ligneArrivee" in self.MENU.listObjectInstancies:
             for ligneArrivee in self.MENU.listObjectInstancies["ligneArrivee"].values():
@@ -372,6 +340,56 @@ class Game():
                     self.retourMenu()
 
                     self.frameFin = 200
+
+    def playerLeave(self, idPalourde : int) -> None:
+        if idPalourde in self.ALL_PALOURDES:
+            self.ALL_PALOURDES.pop(idPalourde)
+
+
+    # --------------- Methodes Menu ----------------
+    def checkCode(self, code) -> None:
+        self.NETWORK_OBJECT.setMacServerAddress(code)
+        if self.NETWORK_OBJECT.startClient():
+            threading.Thread(target=self.waitGameStarted, daemon=True).start()
+            self.MENU.listObjectInstancies["text"]["probleme"].setText("Le client s'est connecté. Attend que le serveur lance la partie...")
+        else:
+            self.MENU.listObjectInstancies["text"]["probleme"].setText(self.NETWORK_OBJECT.problem)
+
+    def retourMenu(self):
+        if self.NETWORK_OBJECT != None:
+            self.NETWORK_OBJECT.close()
+            self.NETWORK_OBJECT = None
+        self.ALL_PALOURDES = {}
+        self.PALOURDE.changementModeNormal()
+        self.MENU.switchMenu("title")
+
+    
+    # ------------ Methodes Utilitaires ------------
+    def tranformCoo(self, xUser : str | int |float , yUser: str | int |float ) -> int | float:
+        if xUser == "center":
+            x = (self.PALOURDE.surface.get_width() - self.PALOURDE.LARGEUR) // 2
+        elif xUser == "end":
+            x = self.PALOURDE.surface.get_width() - self.PALOURDE.LARGEUR - 10
+        elif xUser == "start":
+            x = 0
+        elif xUser == "current":
+            x = self.PALOURDE.x
+        else:
+            x = xUser
+
+        if yUser == "center":
+            y = (self.PALOURDE.surface.get_height()-self.PALOURDE.HAUTEUR)//2
+        elif yUser == "current":
+            y = self.PALOURDE.y
+        elif yUser == "start":
+            y = 0
+        elif yUser == "end":
+            y = self.PALOURDE.y - self.PALOURDE.HAUTEUR- 10
+        else:
+            y = yUser
+        
+        return x, y
+
 
 if __name__ == "__main__":
     game = Game()
