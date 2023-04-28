@@ -11,12 +11,12 @@ Pour ce qui est de la réaction aux collision, nous essayons dans un premier tem
 
 De plus, nous avons aussi ajouté un moyen pour la palourde de tourner sur elle même et donc subir la gravité lorsque se trouve sur le sol sans faire de mouvement
 
-## La Partie Reseau 
+### La Partie Reseau 
 Le reseau fonctionne en Bluetooth par l'intermédiaire de la library socket. De plus, la gestion du réseau c'est à dire traiter les réponses et envoyer les requetes fonctionne grâce à la library selector (la réception) et threading. 
 
 
 
-##Les mouvements du jeu
+### Les mouvements du jeu
 Afin d'avoir un mouvement qui ressemble à celui d'un objet ovale qui roule, nous avons utilisé la fonction cosinus étant donné que sa courbe ressemble à un grand point à celle de l'accélération d'un objet ovale qui roule en fonction de son angle de rotation .Avec la valeur de cosinus, nous ajoutons une valeur suplémentaire correspondant à la force de la palourde qui est utilisé afin de se déplacer
 
 ![cos](https://user-images.githubusercontent.com/116309446/235167732-ee1b32a9-7e25-4862-acdd-ca46155a0562.jpg)
