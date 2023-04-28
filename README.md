@@ -32,3 +32,11 @@ Cette dernière interface pour le joueur hote lui permettra de lancer le jeu qua
 En allant à gauche le joueur tombe sur le menu qui propose un champ de texte pour *écrire* le **code qui se trouve chez le joueur hôte**. Après avoir écrit le code en faisant attention au "o", "0" et "O" faites *entrer* pour lancer une tentative de connexion. Si le texte affiché dit que **"Le client s'est connecté. Attend que le serveur lance la partie..."**,  Bravo!! Vous avez réussis à vous connecter au joueur hote et il ne manque plus qu'il lance la partie. Sinon si le champ n'apparait, il faut juste se déplacer et il apparaitra ou si il affiche un autre texte cela peut venir que **le serveur n'a pas été lancé**, **le code n'est pas bon** ou que **le bluetooth n'est activé pas sur la machine**.
 
 <img src="https://user-images.githubusercontent.com/86235354/235150065-ce04bc3a-bb9a-4ba3-98c3-73d018c3242d.png" alt="My cool logo" width="400"/>
+
+## Les contrôles
+
+- q / flèche directionnel gauche : rouler à gauche
+- d / flèche directionnel droite : rouler à droite
+- barre espace / flèche directionnel haut : sauter
+- left shift : taper (s'active seulement dans le mode versus)
+- double échap : retourner au menu
