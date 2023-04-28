@@ -91,7 +91,7 @@ class Palourde:
         self.degreeBrasDroit : float = 234
         self.isKicking : bool = False
         self.etapeKick : int = 1
-        self.sante : float = 100
+        self.sante : float = 10
         self.recoitDegat : bool = False
         self.frameRouge : int = 0
         self.mort : bool = False
@@ -501,7 +501,7 @@ class Palourde:
         """
         # Créé par Robin
         self.modeVersus = False
-        self.sante = 100
+        self.sante = 10
         self.mort = False
         self.PALOURDE_IMAGE_RESIZED = pygame.transform.scale(self.PALOURDE_IMAGE, (self.LARGEUR, self.HAUTEUR))
         self.frameRouge = 0
@@ -1032,7 +1032,7 @@ class OtherPalourde:
 
         self.pointsCollisions = []
         
-        self.sante = 100
+        self.sante = 10
 
         #on initialise avec des rect qui changeront plus tard, cela permet d'éviter de réinitialiser la variable à chaque fois
         self.rect = [pygame.Rect(self.x,self.y,5,5) for _ in range(5)]

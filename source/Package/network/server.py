@@ -48,7 +48,7 @@ class Server:
         self.levelName = ""
         self.mode = ""
 
-        self.serverRun = False
+        self.run = False
         self.socket : socket.socket= socket.socket(socket.AF_BLUETOOTH, socket.SOCK_STREAM, socket.BTPROTO_RFCOMM)
         # AF_BLUETOOTH -> Bluetooth
         # SOCK_STREAM -> Type socket (defaut)
@@ -76,9 +76,9 @@ class Server:
         """
         showMessage(f"Le serveur se lance sur l'adresse '{self.MAC_SERVER}' au port {self.PORT}")
         showMessage(f"Le code est {self.CODE}")
-        self.serverRun = True
+        self.run = True
 
-        while self.serverRun:
+        while self.run:
             events = self.selector.select()
             
             for key, mask in events:
@@ -96,9 +96,9 @@ class Server:
         Returns:
             str: raison de l'arrêt
         """
-        self.sendAll(CODE_DISCONECTED, text)
+        # self.sendAll(CODE_DISCONECTED, text)
         showMessage(text)
-        self.serverRun = False
+        self.run = False
 
         # Remet à zéro
 
@@ -135,7 +135,7 @@ class Server:
         """Mettre en place les systèmes pour la gestion de ce nouveau client
         """
 
-        if self.serverRun:
+        if self.run:
             conn, addr = self.socket.accept()
             idClient = self.generateId()
 
@@ -183,7 +183,7 @@ class Server:
         """Lancement de la boucle qui envoie les données du jeu tous les x secondes
         """
 
-        while self.gameStarted and self.serverRun:
+        while self.gameStarted and self.run:
             x, y =self.PALOURDE.updateTotalCo() # le joueur host
             self.updateDataClientHost(x, y, self.PALOURDE.angle, self.PALOURDE.sante)
             self.sendAll(CODE_GAME_DATA, self.data)

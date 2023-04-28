@@ -265,6 +265,7 @@ class Game():
         # Par Nathan
 
         self.NETWORK_OBJECT = Client(self.PALOURDE)
+        print(self.MENU.listObjectInstancies["input"]["networkCode"])
         self.MENU.listObjectInstancies["input"]["networkCode"].setCommand(self.checkCode)
    
     def createParty(self) -> None:
@@ -404,6 +405,7 @@ class Game():
 
                     self.frameFin = 200
 
+
     def playerLeave(self, idPalourde : int) -> None:
         """Enlève une palourde
 
@@ -427,9 +429,13 @@ class Game():
         if self.NETWORK_OBJECT != None:
             self.NETWORK_OBJECT.close()
             self.NETWORK_OBJECT = None
+        self.MENU.clientEnable = False
+
         self.ALL_PALOURDES = {}
         self.PALOURDE.changementModeNormal()
         self.MENU.switchMenu("title")
+        self.PALOURDE.x = 500
+        self.PALOURDE.y = 100
 
     
     # ------------ Methodes Utilitaires ------------

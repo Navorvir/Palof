@@ -57,6 +57,8 @@ class Client(NetowrkObject):
 
         self.connectionDone : bool = False
         self.gameStarted : bool = False
+        self.run = True
+
 
         self.levelName : str = ""
         self.mode : str = ""

@@ -30,7 +30,7 @@ class NetowrkObject(object):
         self.MAC_SERVER : str =  macSever
         self.PORT : int = port
         self.surchage : dict = {"code":None,"data":None}
-
+        self.run = True
 
         self.socket : socket.socket = socket
  
@@ -111,7 +111,7 @@ class NetowrkObject(object):
         Returns:
             dict: dictionnaire qui contient les données provenant d'un autre socket
         """
-        if not self.socket._closed:
+        if not self.socket._closed and self.run:
 
             data = self.socket.recv(1024)
             return self.checkJson(data)
