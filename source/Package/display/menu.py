@@ -74,9 +74,7 @@ class Menu():
 
         self.listObjectInstancies : dict = {"button":{},"input":{},"text":{}}
 
-        
-    def startG(self):
-        pass
+
 
     def title(self) -> None:
         # par Lucie
