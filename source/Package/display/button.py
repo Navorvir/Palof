@@ -20,11 +20,13 @@ class Button(BasicDisplay) :
         self.listObject = [self.buttonObject]
         
     def pressed(self):
+        # par Lucie
         if self.bouton_rect.collidepoint(pygame.mouse.get_pos()):
             if pygame.mouse.get_pressed()[0] == True:
                 return True
             return False
         
     def setCommand(self, command):
+        # par Nathan
         self.command = command
         self.directCommand = True
