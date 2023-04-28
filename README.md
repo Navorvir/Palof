@@ -6,4 +6,4 @@ Palof est un jeu de plateforme multijoueurs où l’on contrôle une palourde .L
 - 
 
 
-![alt text](https://github.com/[username]/[reponame]/blob/[branch]/image.jpg?raw=true)
+![alt text](https://github.com/Navorvir/Palof/tree/Main/source/Assets/logoPalof.png?raw=true)
