@@ -26,7 +26,6 @@ class Text(BasicDisplay):
         self.text : str = text
         self.lastText : str = None
 
-
     def setText(self, text : str = None) -> None:
         """Changer le texte de l'objet
 
@@ -50,4 +49,3 @@ class Text(BasicDisplay):
             self.displayChange = True
         else:
             self.displayChange = False
-
