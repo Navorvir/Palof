@@ -452,7 +452,14 @@ class Palourde:
 
         self.xCamera += self.vitesseAvancement
     
-    def updateTotalCo(self):
+    def updateTotalCo(self) -> tuple: 
+        """Met à jour les coordonnées totales x et y
+
+        Returns:
+            tuple: coordonnées totalse x et y
+        """
+        # Créé par Nathan
+
         self.xTotal = self.x + self.xCamera
         self.yTotal = self.y + self.yCamera
         return self.xTotal, self.yTotal
@@ -544,13 +551,16 @@ class Palourde:
             self.isKicking = False
             self.etapeKick = 1
 
-    def coupSubi(self,sens) -> None:
+    def coupSubi(self,dictRequete) -> None:
         """summary
         Projette la palourde, permettant alors qu'elle se prenne des dégats
 
         S'active suite à avoir reçut un coup de la part d'une autre palourde
         """
         # Créé par Robin
+        
+        sens = dictRequete["sens"] # Nathan
+        
         if pygame.time.get_ticks() - self.tempsDernierCoup > 800:
             self.vitesseAvancement += 15 * sens
             self.saut()
