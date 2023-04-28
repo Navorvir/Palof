@@ -17,8 +17,13 @@ class Map():
         self.SCREEN_WIDTH : int = width
         self.SCREEN_HEIGHT : int = height  
         
-    def traitement(self, directory):
+    def traitement(self, directory : str) -> None:
         # par Nathan et Lucie
+        """
+        paramètre : directory : chemin d'accès vers le fichier
+        Traite les données json 
+        """
+        
         with open(directory) as file:
             self.data = json.load(file)
             self.imagePath = self.data["header"]["imagePath"]
@@ -51,7 +56,8 @@ class Map():
                     if "image" in object:
                         if object["image"] in self.data["header"]["images"]:
                             self.image = pygame.image.load(self.imagePath + self.data["header"]["images"][object["image"]])
-                        
+                            
+                    # si c'est un bloc de couleur
                     elif "text" not in object :
                         self.sprite["color"] = object["color"]
                         self.image = pygame.Surface((object["width"],object["height"]))
@@ -69,7 +75,7 @@ class Map():
 
                     if "type" in object:
                         self.object_Instancy(object["type"], object)                                                       
-                        
+                    
                     if "layer" not in object:
                         object["layer"] = 1                
                     
@@ -78,6 +84,9 @@ class Map():
                     
     def object_Instancy(self, type, object):
         # par Nathan et Lucie
+        """
+        Instancie les objets avec un type
+        """
         objectInstancy = None
 
         if type == "button":
@@ -102,13 +111,16 @@ class Map():
         else:
             print(type, object)
         
-    def get_ObjectInstancies(self):
+    def get_ObjectInstancies(self)-> dict :
         
         return self.listObjectInstancies       
     
 
     def tranformX(self, x : str | int |float | list, width : int|float) -> int | float:
         # par Nathan
+        """
+        Définie la coordonnée x de l'objet en fonction de spawncoordonate
+        """
         xTotal = 0
         if type(x) != list:
             x = [x]
@@ -127,6 +139,9 @@ class Map():
     
     def tranformY(self, y : str | int |float | list, height : int|float) -> int | float:
         # par Nathan
+        """
+        Définie la coordonnée y en fonction de spawncoordonate
+        """
         yTotal = 0
         if type(y) != list:
             y = [y]
