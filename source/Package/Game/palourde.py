@@ -491,6 +491,7 @@ class Palourde:
             self.vitesseAvancement = random.randint(-50,50) / 10
         else:
             self.y = 400
+            self.x = 500
             self.vitesseChute = 0
             self.timeChute = 0
 
