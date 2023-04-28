@@ -68,7 +68,6 @@ class Menu():
         self.switchSceneEnable : bool = True        
         self.map = self.NAME_MENU["title"]["path"]
         self.mapChose = None
-        self.estPause = False
 
         self.runServer = False
         self.sceneEnable = False
