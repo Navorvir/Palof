@@ -186,7 +186,7 @@ class Game():
                 self.ALL_PALOURDES[id].placement()
                 self.CAMERA.appendPalourde(self.ALL_PALOURDES[id].rect)
                 
-                self.palourdeEvenement!.append(self.ALL_PALOURDES[id])
+                self.palourdeEvenement.append(self.ALL_PALOURDES[id])
             
 
 
