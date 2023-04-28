@@ -70,7 +70,7 @@ La première chose que fait le client après avoir initialisé est la demande de
 
 
 
-## GameDisgne
+## Game Design
 
 ### Traitement json
 Les maps des niveaux et les éléments des différentes scènes sont stockés dans des fichiers json sous forme de dictionnaire. Pour chaque élément ont vérifie si il possède des coordonnées, une image ou une couleur (si il n'y en a pas, la couleur par défaut est le noir). Le rect et l'image de chaque élément est mis dans une liste en fonction de la couche auquel il appartient (1er plan, 2eme plan, 3eme plan).  De plus si des éléments ont un type (comme les boutons) et que ce type existe un objet est instancié. Cette liste est envoyée à la caméra quand la map est chargé pour qu'elle les affiches.
