@@ -484,10 +484,15 @@ class Palourde:
         S'active quand la palourde tombe dans le vide
         """
         # Créé par Robin
-        self.y = -750
-        self.vitesseChute = -100
-        self.timeChute = 0
-        self.vitesseAvancement = random.randint(-50,50) / 10
+        if self.modeVersus == False:
+            self.y = -750
+            self.vitesseChute = -100
+            self.timeChute = 0
+            self.vitesseAvancement = random.randint(-50,50) / 10
+        else:
+            self.y = 400
+            self.vitesseChute = 0
+            self.timeChute = 0
 
     def changementModeNormal(self) -> None:
         """summary
