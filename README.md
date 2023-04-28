@@ -44,6 +44,7 @@ En allant à gauche le joueur tombe sur le menu qui propose un champ de texte po
 ## liste des images utiliés :
 - [background_palof.png](./source/Assets/Background/background_palof.png)
 
+
 - [sable_100X100.png](./source/Assets/Structures/sable_100X100.png)
 - [sable_1300X100.png](./source/Assets/Structures/sable_1300X100.png)
 - [sable_150X50.png](./source/Assets/Structures/sable_150X50.png)
@@ -53,6 +54,7 @@ En allant à gauche le joueur tombe sur le menu qui propose un champ de texte po
 - [palmier.png](./source/Assets/Structures/palmier.png)
 - [pierre.png](./source/Assets/Structures/pierre.png)
 
+
 - [palourde2.png](./source/Assets/Entity/Player/palourde2.png)
 - [palourde2_endommage1.png](./source/Assets/Entity/Player/palourde2_endommage1.png)
 - [palourde2_endommage2.png](./source/Assets/Entity/Player/palourde2_endommage2.png)
@@ -61,6 +63,7 @@ En allant à gauche le joueur tombe sur le menu qui propose un champ de texte po
 - [bras_droit.png](./source/Assets/Entity/Player/bras_droit.png)
 - [bras_gauche_gant.png](./source/Assets/Entity/Player/bras_gauche_gant.png)
 - [bras_droit_gant.png](./source/Assets/Entity/Player/bras_droit_gant.png)
+
 
 - [bouton_level.png](./source/Assets/Button/bouton_level.png)
 - [bouton_mode_niveau.png](./source/Assets/Button/bouton_mode_niveau.png)
