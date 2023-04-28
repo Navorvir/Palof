@@ -13,7 +13,7 @@
         {"x" : 1280 , "y": 100, "width" : 20, "height" : 600, "layer":1, "color":[122, 0, 133]},
             {"x" : 0 , "y": "bottom", "width" : 1300, "height" : 100, "layer":1, "color":[122, 0, 133],"image":"sable"},
             {"x" : "center" , "y": "center", "width" : 350, "height" : 253, "layer":1, "image":"startGame","type":"button", "name":"startGame", "command":"","args":[""]},
-            {"x" : "right" , "y": ["top",50], "width" : 350, "height" : 253, "layer":1, "text":"player 1","type":"text", "name":"players"},
+            {"x" : "right" , "y": ["top",50], "width" : 350, "height" : 253, "layer":1, "text":"","type":"text", "name":"players"},
             {"x" : -20 , "y": 100, "width" : 20, "height" : 600, "layer":1, "color":[122, 0, 133]},
             {"x" : "center" , "y": ["top",50], "width" : 400, "height" : 50, "layer":1,"text" :"code : ", "color":[233, 237, 239], "type":"text", "name":"code"},
             {"x" : ["left",50] , "y": ["top",50], "width" : 10, "height" : 50, "layer":1,"text" :"", "color":[223, 56, 56], "type":"text", "name":"probleme"}
