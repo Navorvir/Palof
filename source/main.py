@@ -51,7 +51,6 @@ class Game():
         # ==================== VARIABLES ===================
         self.running : bool = True
         self.gameStarted : bool = False
-        self.clientEnable : bool = False
         self.modeVersus : bool = False
 
         self.problem : str = ""
@@ -254,9 +253,9 @@ class Game():
             self.MENU.listObjectInstancies["text"]["code"].setText("code : " + self.NETWORK_OBJECT.CODE)
             self.MENU.listObjectInstancies["button"]["startGame"].setCommand(self.startParty)
 
-        elif self.MENU.NAME_MENU["wait"]["path"] == self.MENU.map and not self.clientEnable:
+        elif self.MENU.NAME_MENU["wait"]["path"] == self.MENU.map and not self.MENU.clientEnable:
             self.joinParty()
-            self.clientEnable = True   
+            self.MENU.clientEnable = True   
    
 
     # --------------- Methodes Réseaux ----------------

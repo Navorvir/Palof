@@ -42,7 +42,10 @@ class NetowrkObject(object):
         """
 
         if not self.socket._closed:
-            self.socket.send(msg.encode())
+            try:
+                self.socket.send(msg.encode())
+            except:
+                pass
 
     def surchageData(self, code : int, data):
             self.surchage : dict = {"code":code,"data":data}
@@ -108,6 +111,9 @@ class NetowrkObject(object):
         Returns:
             dict: dictionnaire qui contient les données provenant d'un autre socket
         """
+        if not self.socket._closed:
 
-        data = self.socket.recv(1024)
-        return self.checkJson(data)
+            data = self.socket.recv(1024)
+            return self.checkJson(data)
+        else:
+            return {"code":None,"data":None}

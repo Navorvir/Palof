@@ -71,6 +71,7 @@ class Menu():
 
         self.runServer = False
         self.sceneEnable = False
+        self.clientEnable = False
 
         self.listObjectInstancies : dict = {"button":{},"input":{},"text":{}}
     
@@ -99,6 +100,7 @@ class Menu():
 
                 if event.key in (pygame.K_RETURN, pygame.K_KP_ENTER):
                     objectInput.text = objectInput.getUnicode(objectInput.text)
+                    print(objectInput.command)
                     if objectInput.command != None and type(objectInput.command) != str:
                         objectInput.command(objectInput.text)
 
@@ -249,6 +251,7 @@ class Menu():
         if self.PALOURDE.palourdeRect.clipline(self.SCREEN_HEIGHT,0,self.SCREEN_HEIGHT,self.SCREEN_WIDTH):
             self.PALOURDE.x = 0
             self.switchMenu("title")
+            self.clientEnable = False
 
             
     def choseMenu(self) -> None:
