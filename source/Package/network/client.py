@@ -3,6 +3,7 @@ from time import sleep
 import selectors
 import threading
 
+# Créé par Nathan
 
 try:
     from Package.network.usily import showMessage, convertBase36ToHex, formatAddress

@@ -1,6 +1,9 @@
 import socket
 import json
 
+# Créé par Nathan
+
+
 # Codes de communication
 CODE_DISCONECTED: int = 0
 CODE_START_GAME: int = 1

@@ -1,6 +1,8 @@
 from datetime import datetime
 import psutil
 
+# Créé par Nathan
+
 def showMessage(text, *args) -> None:
     """Affiche un texte avec la date de l'affichage
 

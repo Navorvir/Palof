@@ -3,12 +3,27 @@ from Package.display.objectDislay import BasicDisplay
 from Package.display.text import Text
  
 class Input(Text):
-    def __init__(self,name,x,y,width, height,pathImage, command, maxChar : int =10):
+    """Objet qui permet de créer un champ de texte pour récupérer les valeurs saisies des valeurs entre 0 et 9 et de "a" à "z"
+    """
+
+    def __init_(self, name:  str, x: int | float, y: int | float, width: int | float, height: int | float, pathImage : str, command, maxChar : int =10):
+        """_summary_
+
+        Args:
+            name (str): nom pour retrouver l'objet Input
+            x (int | float): coordonnée x de l'objet Input
+            y (int | float): coordonnée y de l'objet Input
+            width (int | float): largeur de l'objet In Inputput
+            height (int | float): hauteur de l'objet
+            pathImage (str): chemin vers l'image
+            command (): case de mémoire de la méthode ou nom pour le gestionnaire de boutons dans menu
+            maxChar (int, optional): le nombre de caractères maximums dans le champ de texte. Defaults to 10.
+        """
         super().__init__(name,x+x-maxChar*10,y-10,width, height, "")
 
-        self.IMAGE = pathImage
+        self.IMAGE : str = pathImage
         
-        self.MAX_CHAR = maxChar        
+        self.MAX_CHAR : int = maxChar        
         
 
         self.prompt = self.FONT.render("",True, self.FONT_COLOR)
@@ -18,8 +33,9 @@ class Input(Text):
         self.command = command
 
         
-        self.textRender = None
+        self.textRender= None
         self.rectRender = None
+
         self.setText()
 
         self.isSend = False
@@ -36,6 +52,11 @@ class Input(Text):
         self.update()
       
     def setCommand(self, command):
+        """Mettre en place une nouvelle méthode ou fonction
+
+        Args:
+            command ( méthode ou fonction): est exécuter lorsqu'on fait entré
+        """
         self.command = command
      
         

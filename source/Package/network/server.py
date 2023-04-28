@@ -3,6 +3,9 @@ import selectors
 from time import sleep
 import threading
 
+# Créé par Nathan
+
+
 try:
     from Package.network.usily import showMessage, checkValueList, getMacBluetooth
     from Package.network.networkCode import *
