@@ -14,12 +14,21 @@ py -m pip <nom de la bibothèque python>
 Si vous voulez jouer à plusieurs, vous devez choisir un joueur hôte qui permettra le lien entre tous les appareils. Pour ce faire, le joueur hôte doit s'appairer aux différents appareils clients pour permettre la connexion Bluetooth.
 
 ## Lancement
-Le joueur hote doit d'abord aller vers la gauche pour accéder au menu mode. Ici il doit choisir le mode qu'il veut jouer soit **les niveaux coopératifs** ou le **versus** en cliquant dessus.
+
+### Le joueur hôte:
+Le joueur hote doit d'abord aller vers la *gauche* pour accéder au menu mode. Ici il doit choisir le mode qu'il veut jouer soit **les niveaux coopératifs** ou le mode **versus** en *cliquant dessus*.
 
 <img src="https://user-images.githubusercontent.com/86235354/235151493-e0b61485-ea4a-4d1e-9ab8-26c16741b686.png" alt="My cool logo" width="400"/>
 
+Ensuite si vous avez cliquer sur le **les niveaux coopératifs** il y a une étape de plus le choix du niveau où vous devez *cliquer* sur un **niveau**. A partir de ce moment vous devez avoir le menu si dessous qui vous propose de jouer en solo ou en multijoueur, vue que nous voullons jouer en multijoueur il faut *cliquer* sur le **bouton multijoueur**.
+
 <img src="https://user-images.githubusercontent.com/86235354/235151566-5ea5451a-7ddf-4f5b-80d2-5e269c6df150.png" alt="My cool logo" width="400"/>
 
+Cette dernière interface pour le joueur hote lui permettra de lancer le jeu quand tous les joueurs clients seront connectés en *cliquant* sur le bouton **lancer le jeu**. Le code qui s'affiche est important car il permet au client de se connecter au serveur car en réalite ce code représente l'adresse mac bluetooth du serveur en base 36.
+
 <img src="https://user-images.githubusercontent.com/86235354/235151674-fc62c70c-dfed-42e2-a60f-6a6bb5d24f4a.png" alt="My cool logo" width="400"/>
+
+### Les autres joueur clients:
+En allant à gauche le joueur tombe sur le menu qui propose un champ de texte pour *écrire* le **code qui se trouve chez le joueur hôte**. Après avoir écrit le code en faisant attention au "o", "0" et "O" faites *entrer* pour lancer une tentative de connexion. Si le texte affiché dit que **"Le client s'est connecté. Attend que le serveur lance la partie..."**,  Bravo!! Vous avez réussis à vous connecter au joueur hote. Sinon si le champ n'apparait, il faut juste se déplacer et il apparaitra ou si il affiche un autre texte cela peut venir que **le serveur n'a pas été lancé**, **le code n'est pas bon** ou que **le bluetooth n'est activé pas sur la machine**.
 
 <img src="https://user-images.githubusercontent.com/86235354/235150065-ce04bc3a-bb9a-4ba3-98c3-73d018c3242d.png" alt="My cool logo" width="400"/>
