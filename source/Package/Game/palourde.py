@@ -19,7 +19,7 @@ class Palourde:
         self.xVoulut : float = self.x
         self.yVoulut : float = self.y
 
-        # 616 et 276 sont les dimensions de l'image de la palourde
+        # 185 et 354 sont les dimensions de l'image de la palourde
         self.HAUTEUR : int = 185//4
         self.LARGEUR : int = 354//4
 
