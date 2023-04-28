@@ -80,7 +80,7 @@
 			{"x" : 8600 , "y": 500, "width" : 200, "height" : 100, "layer":1, "image":"sable"},
 
 			
-			
+	    {"x" : 8800 , "y": 500, "width" : 800, "height" : 100, "layer":0,"type":"ligneArrivee"},		
 			
 			
             {"x": 8800, "y": 600, "width": 200, "height": 100, "layer":1, "image":"sable"},
