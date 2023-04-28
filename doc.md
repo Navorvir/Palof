@@ -12,6 +12,8 @@ Pour ce qui est de la réaction aux collision, nous essayons dans un premier tem
 
 De plus, nous avons aussi ajouté un moyen pour la palourde de tourner sur elle même et donc subir la gravité lorsque se trouve sur le sol sans faire de mouvement
 
+Cependant la physique n'est pas parfaite, Nous pouvons encrore trouver quelque bugs de collision avec les murs et avec le sol, ce qui arrive lorsque'la palourde avance à une trop grande vitesse ou entre en collision avec un Rect dans le mauvais angle
+
 ### La Partie Reseau 
 Le reseau fonctionne en Bluetooth par l'intermédiaire de la library socket. De plus, la gestion du réseau c'est à dire traiter les réponses et envoyer les requetes fonctionne grâce à la library selector (la réception) et threading. 
 
