@@ -221,8 +221,11 @@ class Game():
         """Charge la map en récupérant le fichier, en positionnant la palourde et en mettant à jour les variable de la camera
 
         Args:
-            map (str): _description_
+            map (str): chemin du fichier map
         """
+
+        # Par Tout le monde
+
         testMap = Map()
 
         testMap.traitement(map)
@@ -240,7 +243,6 @@ class Game():
             self.lockCamera(xSpawn,ySpawn)
         else:
             self.unlockCamera()
-
             
         # Afficher les textes
         self.MENU.loadInput()
@@ -259,16 +261,29 @@ class Game():
 
     # --------------- Methodes Réseaux ----------------
     def joinParty(self) -> None:
+        """Permet de transfomer le joueur en mode client afin de pouvoir rejoindre un serveur
+        """
+        # Par Nathan
+
         self.NETWORK_OBJECT = Client(self.PALOURDE)
         self.MENU.listObjectInstancies["input"]["networkCode"].setCommand(self.checkCode)
    
     def createParty(self) -> None:
+        """Permet de transfomer le joueur en mode server afin de pouvoir faire rejoindre d'autres joueurs
+        """
+        # Par Nathan
+
         self.NETWORK_OBJECT = Server(self.PALOURDE)
    
         threading.Thread(target=self.NETWORK_OBJECT.startServer, daemon=True).start()
         self.NETWORK_OBJECT.setTypeGame(self.MENU.mode,self.MENU.mapChose)
 
-    def startParty(self):
+    def startParty(self) -> None:
+        """Permet de lancer la partie coté serveur
+        """
+
+        # Par Nathan
+
         time.sleep(1)
 
         self.NETWORK_OBJECT.startGame()
@@ -278,6 +293,10 @@ class Game():
         self.MENU.startParty()
     
     def waitGameStarted(self) -> None:
+        """ Coté client attend que le serveur lance pour changer de scène
+        """
+
+        # Par Nathan
 
         while not self.NETWORK_OBJECT.gameStarted:
             time.sleep(0.5)
@@ -294,9 +313,29 @@ class Game():
         time.sleep(1) # laisse un peu de temps au chargement
         self.loadMap(self.NETWORK_OBJECT.levelName)
 
+    def checkCode(self, code : str) -> None:
+        """Tente de se connecter au serveur. Si il arrive il affiche un message de succès et il le waitGameStarted mais si il ne réussit pas
+           il affiche un message d'erreur
 
+        Args:
+            code (str): code provenant du seveur
+        """
+        # Nathan
+
+        self.NETWORK_OBJECT.setMacServerAddress(code)
+        if self.NETWORK_OBJECT.startClient():
+            threading.Thread(target=self.waitGameStarted, daemon=True).start()
+            self.MENU.listObjectInstancies["text"]["probleme"].setText("Le client s'est connecté. Attend que le serveur lance la partie...")
+        else:
+            self.MENU.listObjectInstancies["text"]["probleme"].setText(self.NETWORK_OBJECT.problem)
+    
+    
     # --------------- Methodes Cameras ----------------
     def background(self) -> None:
+        """ Génére le déplacement du fond d'écran (optionelle car consomme beaucoup)
+        """
+        # Robin
+
         self.cooBackground[0][0]= self.PALOURDE.xCamera // 1920 * 1920 - self.PALOURDE.xCamera 
         self.cooBackground[1][0]= (self.PALOURDE.xCamera // 1920 + 1) * 1920 - self.PALOURDE.xCamera 
         
@@ -304,20 +343,40 @@ class Game():
             self.SCREEN.blit(self.spriteBackground[i], (self.cooBackground[i][0], self.cooBackground[i][1]))
 
     def lockCamera(self, x : int = 500, y : int = 250) -> None:
+        """Permet de bloqué la caméra
+
+        Args:
+            x (int, optional): coordonné x où elle doit se bloqué. Defaults to 500.
+            y (int, optional): coordonné y où elle doit se bloqué. Defaults to 250.
+        """
+
+        # Nathan et Robin
       
         self.PALOURDE.lockCamera(x,y)
 
     def unlockCamera(self) -> None:
+        """Permet de débloqué la caméra pour qu'elle bouge suivant la position de la palourde
+        """
+
         self.PALOURDE.cameraLock = False
         self.CAMERA.unlockCamera()
 
 
     # ----- Methodes Controle etat du jeu --------
-    def gameOver(self):
+    def gameOver(self) -> None:
+        """Afficher le Game Over dans le Versus avec l'aide de l'objet text qui a comme name "gameOver"
+        """
+        # Nathan
+
         self.MENU.listObjectInstancies["text"]["gameOver"].setText("Game Over!")
         self.NETWORK_OBJECT.gameStarted = False
     
-    def detectionCoupPalourde(self):
+    def detectionCoupPalourde(self) -> None:
+        """Envoie une requete si il y a un contacte entre la palourde et l'une des autres palourdes
+        """
+
+        # Par Robin et Nathan
+
         for id, autrePalourde in self.ALL_PALOURDES.items():
             for rect in autrePalourde.rect:
                 if pygame.Rect.colliderect(rect,self.PALOURDE.brasGaucheRectRotation):
@@ -333,6 +392,11 @@ class Game():
                         self.NETWORK_OBJECT.sendTemporyParameter("sens", 1,id)
 
     def evenementObjet(self) -> None:
+        """Vérifie les collisions avec la ligne d'arrivée (peut être transformé pour accueuillir d'autres objets spéciaux)
+        """
+
+        # Robin
+
         if "ligneArrivee" in self.MENU.listObjectInstancies:
             for ligneArrivee in self.MENU.listObjectInstancies["ligneArrivee"].values():
                 if ligneArrivee.verification(self.palourdeEvenement,self.PALOURDE.xCamera,self.PALOURDE.yCamera) == True:
@@ -342,20 +406,25 @@ class Game():
                     self.frameFin = 200
 
     def playerLeave(self, idPalourde : int) -> None:
+        """Enlève une palourde
+
+        Args:
+            idPalourde (int): l'id de la palourde qu'il faut enlever
+        """
+
+        # Nathan
+
         if idPalourde in self.ALL_PALOURDES:
             self.ALL_PALOURDES.pop(idPalourde)
 
 
     # --------------- Methodes Menu ----------------
-    def checkCode(self, code) -> None:
-        self.NETWORK_OBJECT.setMacServerAddress(code)
-        if self.NETWORK_OBJECT.startClient():
-            threading.Thread(target=self.waitGameStarted, daemon=True).start()
-            self.MENU.listObjectInstancies["text"]["probleme"].setText("Le client s'est connecté. Attend que le serveur lance la partie...")
-        else:
-            self.MENU.listObjectInstancies["text"]["probleme"].setText(self.NETWORK_OBJECT.problem)
-
     def retourMenu(self):
+        """Revient au menu title
+        """
+
+        # Par Lucie
+
         if self.NETWORK_OBJECT != None:
             self.NETWORK_OBJECT.close()
             self.NETWORK_OBJECT = None
@@ -366,6 +435,18 @@ class Game():
     
     # ------------ Methodes Utilitaires ------------
     def tranformCoo(self, xUser : str | int |float , yUser: str | int |float ) -> int | float:
+        """Transforme les racourcis x et y en nombre.
+
+        Args:
+            xUser (str | int | float): coordonnée x a transformée
+            yUser (str | int | float): coordonnée y a transformée
+
+        Returns:
+            int | float: retourne les coordonnées transformées
+        """
+
+        # Par Nathan
+
         if xUser == "center":
             x = (self.PALOURDE.surface.get_width() - self.PALOURDE.LARGEUR) // 2
         elif xUser == "end":
