@@ -192,6 +192,8 @@ class Game():
                 self.ALL_PALOURDES[id].rotation(1)
                 self.ALL_PALOURDES[id].placement()
                 self.CAMERA.appendPalourde(self.ALL_PALOURDES[id].rect)
+                
+                self.palourdeEvenement!;append(self.ALL_PALOURDES[id])
             
 
 
@@ -358,9 +360,6 @@ class Game():
         if "ligneArrivee" in self.MENU.listObjectInstancies:
             for ligneArrivee in self.MENU.listObjectInstancies["ligneArrivee"].values():
                 if ligneArrivee.verification(self.palourdeEvenement,self.PALOURDE.xCamera,self.PALOURDE.yCamera) == True:
-                    print("Finit")
-                    self.retourMenu()
-
                     self.frameFin = 200
 
 if __name__ == "__main__":
