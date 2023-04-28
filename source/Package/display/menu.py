@@ -81,18 +81,20 @@ class Menu():
         pass
 
     def title(self) -> None:
+        # par Lucie
         if self.map != self.NAME_MENU["title"]["path"]:
             self.switchMenu("title")
  
-
         if self.PALOURDE.palourdeRect.clipline(0,0,0,self.SCREEN_WIDTH):
             self.switchMenu("wait")
         
         elif self.PALOURDE.palourdeRect.clipline(self.SCREEN_HEIGHT,0,self.SCREEN_HEIGHT,self.SCREEN_WIDTH):
             
             self.switchMenu("mode")
+            
         
     def checkButton(self):
+        # par Nathan
         for key, objectButton in self.listObjectInstancies["button"].items():
             if objectButton.pressed():   
                 if  objectButton.directCommand:
@@ -102,6 +104,7 @@ class Menu():
                 time.sleep(0.2)
 
     def checkInput(self, event) -> None:
+        # par Nathan
         if "input" in self.listObjectInstancies:
             for key, objectInput in self.listObjectInstancies["input"].items():
 
@@ -119,11 +122,12 @@ class Menu():
                 objectInput.update()
 
     def waiGameStarted(self):
+        # par Nathan
         self.runServer = True
 
 
     def choseMenu(self) -> None:
-
+        # par Lucie
         # Changer de menu
         if self.PALOURDE.palourdeRect.clipline(0,0,0,self.SCREEN_WIDTH):
             self.PALOURDE.x = self.SCREEN_HEIGHT - self.PALOURDE.LARGEUR
@@ -151,7 +155,7 @@ class Menu():
         
 
     def goVersus(self, levelName :str = "versus", modeServer : bool = True, *args):
-      
+        # par Nathan
         self.mode = self.MODE_VERSUS
         self.mapChose = self.NAME_MAP_VERUS["versus"] 
 
@@ -160,6 +164,7 @@ class Menu():
         self.chosePlayer()
 
     def goLevel(self, levelName : str =None, modeServer : bool = False, allPath : str=None) -> None:
+        # par Nathan
         self.mode = self.MODE_COOP
         self.PALOURDE.changementModeNormal()
 
@@ -178,14 +183,14 @@ class Menu():
 
   
     def waitNetwork(self) -> None:
-    
+        # par Nathan
         if self.PALOURDE.palourdeRect.clipline(self.SCREEN_HEIGHT,0,self.SCREEN_HEIGHT,self.SCREEN_WIDTH):
             self.PALOURDE.x = 0
             self.switchMenu("title")
 
 
     def switchMenu(self, name : str | None, *args) -> None:
-        
+        # par Nathan
         if name != None:
             self.map = self.NAME_MENU[name]["path"]
             
@@ -194,6 +199,7 @@ class Menu():
     
 
     def update(self) -> None:
+        # par Nathan
         if self.stepMenu in self.NAME_MENU and "methUpdt" in self.NAME_MENU[self.stepMenu]:
             self.NAME_MENU[self.stepMenu]["methUpdt"]()
         elif  self.stepMenu not in self.NAME_MENU and self.stepMenu != None:
@@ -202,22 +208,22 @@ class Menu():
 
         self.checkButton()
 
-        if self.estPause == True:
-                self.pause()
-
     # Méthodes Load
     def loadText(self):
+        # par Nathan
         if "text" in self.listObjectInstancies:
             for key, objectText in self.listObjectInstancies["text"].items():
                 objectText.setText()
                 self.appendListSprite(key, objectText)
 
     def loadButton(self):
+        # par Nathan
         if "button" in self.listObjectInstancies:
             for key, objectButton in self.listObjectInstancies["button"].items():
                 self.appendListSprite(key, objectButton)
 
     def loadInput(self):
+        # par Nathan
         if "input" in self.listObjectInstancies:
             for key, objectInput in self.listObjectInstancies["input"].items():
                 self.appendListSprite(key, objectInput)
@@ -234,17 +240,14 @@ class Menu():
                
         
     def lockCamera(self, x : int = 500, y : int = 250) -> None:
-      
         self.PALOURDE.lockCamera(x,y)
         self.CAMERA.lockCamera()
 
     def unlockCamera(self, x : int = 0, y : int = 0) -> None:
-      
         self.PALOURDE.lockCamera(x,y)
         self.CAMERA.unlockCamera()
 
     def appendListSprite(self,name, listSprite):
-        # if len(self.CAMERA.listSprites)>3:
-        #     self.CAMERA.listSprites[:-1]
+        # par Lucie et Nathan
         self.CAMERA.listSpritesChange[name] = listSprite
         
