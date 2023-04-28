@@ -267,7 +267,7 @@ class Menu():
                     self.PALOURDE.x = 0
                     self.PALOURDE.y = 0                
      
-   def chosePlayer(self) -> None:
+    def chosePlayer(self) -> None:
         # par Nathan
         """
         correspond au menu pour choisir si on est en solo ou mutijoueur
