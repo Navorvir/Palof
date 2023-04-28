@@ -180,10 +180,10 @@ class Menu():
         
 
     def goVersus(self, levelName :str = "versus", modeServer : bool = True, *args):
+        # par Nathan
         """
         lance le mode versus
         """
-        # par Nathan
         self.mode = self.MODE_VERSUS
         self.mapChose = self.NAME_MAP_VERUS["versus"] 
 
@@ -192,10 +192,10 @@ class Menu():
         self.chosePlayer()
 
     def goLevel(self, levelName : str =None, modeServer : bool = False, allPath : str=None) -> None:
+        # par Nathan
         """
         defini la map du jeu en fonction du niveau pris
         """
-        # par Nathan
         self.mode = self.MODE_COOP
         self.PALOURDE.changementModeNormal()
 
@@ -214,10 +214,10 @@ class Menu():
 
   
     def waitNetwork(self) -> None:
+        # par Nathan
         """
         met à jour le menu pour se connecter en réseau
         """
-        # par Nathan
         if self.PALOURDE.palourdeRect.clipline(self.SCREEN_HEIGHT,0,self.SCREEN_HEIGHT,self.SCREEN_WIDTH):
             self.PALOURDE.x = 0
             self.switchMenu("title")
