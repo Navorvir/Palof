@@ -28,6 +28,8 @@ Cette dernière interface pour le joueur hote lui permettra de lancer le jeu qua
 
 <img src="https://user-images.githubusercontent.com/86235354/235151674-fc62c70c-dfed-42e2-a60f-6a6bb5d24f4a.png" alt="My cool logo" width="400"/>
 
+Si vous voulez jouer à plus de 2 joueurs dans de bonne condition et que vous possédez un serveur hôte peu puissant, il est conseillé d'augmenter la constante **self.TIME_SPEED_REQUEST** dans l'objet **Server** dans le fichier *"server.py"*. Par exemple, vous pouvez la passer à **0.05**. Le mouvement des autres palourdes restera fluide. Le fait d'augmenter cette constante réduit le nombre de requêtes que le serveur envoi par seconde aux clients et augmente les perfomances en multijoueur.
+
 ### Les autres joueur clients:
 En allant à gauche le joueur tombe sur le menu qui propose un champ de texte pour *écrire* le **code qui se trouve chez le joueur hôte**. Après avoir écrit le code en faisant attention au "o", "0" et "O" faites *entrer* pour lancer une tentative de connexion. Si le texte affiché dit que **"Le client s'est connecté. Attend que le serveur lance la partie..."**,  Bravo!! Vous avez réussis à vous connecter au joueur hote et il ne manque plus qu'il lance la partie. Sinon si le champ n'apparait, il faut juste se déplacer et il apparaitra ou si il affiche un autre texte cela peut venir que **le serveur n'a pas été lancé**, **le code n'est pas bon** ou que **le bluetooth n'est activé pas sur la machine**.
 
